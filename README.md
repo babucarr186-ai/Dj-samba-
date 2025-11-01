@@ -6,23 +6,18 @@ A fast, modern single-page site for Deejay Samba with inline CSS and native audi
 
 - `index.html` — main page (no frameworks)
 - `assets/images/` — place hero/background images (e.g., `dj-hero.jpg`)
-- `assets/audio/` — place short MP3 clips for each category
+- `assets/audio/` — optional: if you want, place your own audio files; otherwise the site generates short demo loops
 
 ## Replace assets
 
 - Hero background: add an image at `assets/images/dj-hero.jpg` (recommended 1920×1080 or larger). The page will fallback to a royalty-free Unsplash photo if the local file is missing.
-- Audio previews: add MP3 files using these exact names (or update paths in the HTML):
-  - `afrobeats-1.mp3`, `afrobeats-2.mp3`
-  - `amapiano-1.mp3`, `amapiano-2.mp3`
-  - `hiphop-1.mp3`, `hiphop-2.mp3`
-  - `latin-1.mp3`, `latin-2.mp3`
-  - `live-mix-1.mp3`, `live-mix-2.mp3`
-
-If MP3s are missing, the site auto-generates short WAV demo loops so audio players always work during development.
+Audio previews: by default, the site auto-generates short WAV demo loops for each genre (Afrobeats, Amapiano, Hip‑Hop, Latin, Mix). This keeps things lightweight and avoids shipping MP3s.
+If you prefer to use your own tracks, embed Spotify or SoundCloud players (there are placeholders in `index.html`).
 
 ## Booking form
 
-The form uses `mailto:` to send to `ngumjoh@gmail.com`. This opens the visitor's default email app. For a production-ready form with server-side handling, connect a service like Formspree, Basin, or a custom API and update the form `action` accordingly.
+The form posts to FormSubmit and emails `ngumjoh@gmail.com` directly (no mailto needed). It uses a honeypot for basic spam protection and redirects to a Thank You state.
+If you switch providers later, just update the form `action` and hidden fields in `index.html`.
 
 ## Preview locally (Windows)
 
