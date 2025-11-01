@@ -272,18 +272,23 @@
     <div class="container">
       <h2 class="section-title">Bookings</h2>
       <p class="section-sub">Tell me about your event and I’ll get back to you quickly.</p>
-  <form action="mailto:ngumjoh@gmail.com" method="post" enctype="text/plain">
+      <!-- Using FormSubmit to send directly to your email without exposing it on the page -->
+      <form action="https://formsubmit.co/ngumjoh@gmail.com" method="POST">
+        <!-- FormSubmit options -->
+        <input type="hidden" name="_subject" value="New Booking Request — Deejay Samba" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="field">
           <label for="name">Name</label>
-          <input id="name" name="Name" type="text" placeholder="Your full name" required />
+          <input id="name" name="name" type="text" placeholder="Your full name" required />
         </div>
         <div class="field">
           <label for="email">Email</label>
-          <input id="email" name="Email" type="email" placeholder="you@example.com" required />
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
         </div>
         <div class="field">
           <label for="details">Event Details</label>
-          <textarea id="details" name="Event Details" placeholder="Date, venue, expected crowd, music preferences…" required></textarea>
+          <textarea id="details" name="message" placeholder="Date, venue, expected crowd, music preferences…" required></textarea>
         </div>
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">Send Booking Request</button>
@@ -292,7 +297,7 @@
             <strong>+49 176 62350091</strong>
           </a>
         </div>
-        <small style="color:var(--muted)">Note: This form opens your default email app to send the message to ngumjoh@gmail.com.</small>
+        <small style="color:var(--muted)">We’ll reply by email shortly after you submit.</small>
       </form>
     </div>
   </section>
