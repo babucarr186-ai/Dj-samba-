@@ -5,8 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Deejay Samba — Official</title>
   <meta name="description" content="Deejay Samba — Rhythm-first DJ for Club Nights & Weddings. Afrobeats, Amapiano, Hip-Hop, Latin. Bookings and audio previews." />
+  <meta name="theme-color" content="#0b0b0f" />
+  <meta property="og:title" content="Deejay Samba — Official" />
+  <meta property="og:description" content="Rhythm-first DJ for Club Nights & Weddings. Afrobeats, Amapiano, Hip-Hop, Latin. Book now." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://babucarr186-ai.github.io/Dj-samba-/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>\
+    <defs>\
+      <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
+        <stop offset='0' stop-color='%23ff2d55'/>\
+        <stop offset='1' stop-color='%2300d2d3'/>\
+      </linearGradient>\
+    </defs>\
+    <rect x='4' y='4' width='56' height='56' rx='12' fill='url(%23g)'/>\
+    <text x='50%' y='54%' font-family='Poppins, Arial' font-size='26' text-anchor='middle' fill='%230b0b0f' font-weight='700'>DS</text>\
+  </svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://open.spotify.com" crossorigin>
+  <link rel="preconnect" href="https://w.soundcloud.com" crossorigin>
+  <link rel="preconnect" href="https://soundcloud.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -61,11 +81,13 @@
 
     /* Buttons */
     .btn{display:inline-block; padding:12px 18px; border-radius:999px; font-weight:700; letter-spacing:.2px; border:1px solid transparent; transition:transform .08s ease, box-shadow .2s ease}
-    .btn-primary{background:var(--accent-grad); color:#0d0f12; box-shadow:0 6px 16px rgba(255,45,85,.25), 0 6px 16px rgba(0,210,211,.25)}
+  .btn-primary{background:var(--accent-grad); color:#0d0f12; box-shadow:0 6px 16px rgba(255,45,85,.25), 0 6px 16px rgba(0,210,211,.25); background-size:200% 200%; animation:btnGlow 10s linear infinite}
     .btn-primary:hover{transform:translateY(-1px)}
     .btn-ghost{background:transparent; color:var(--fg); border-color:var(--card-border)}
   .btn-spotify{background:linear-gradient(135deg, var(--spotify), #19a64a); color:#0d0f12}
   .btn-soundcloud{background:linear-gradient(135deg, var(--sc), #ff5500); color:#0d0f12}
+  .btn-whatsapp{background:linear-gradient(135deg, #25D366, #1fb457); color:#0d0f12}
+  @keyframes btnGlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
     /* Hero */
   .hero{position:relative; min-height:90vh; display:grid; place-items:center; text-align:center; overflow:hidden}
@@ -95,7 +117,7 @@
 
     /* Sections */
   section{padding:70px 0; scroll-margin-top:86px}
-    .section-title{font-size:1.8rem; margin:0 0 18px; font-weight:800}
+  .section-title{font-size:1.8rem; margin:0 0 18px; font-weight:800; background:linear-gradient(135deg, var(--pink), var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent}
     .section-sub{margin-top:-6px; color:var(--muted)}
 
     /* Cards & grids */
@@ -131,6 +153,15 @@
     /* Footer */
     footer{padding:40px 0; border-top:1px solid var(--card-border); color:var(--muted)}
 
+  /* Back to top */
+  #toTop{position:fixed; right:16px; bottom:16px; z-index:60; opacity:0; pointer-events:none; transition:opacity .25s ease}
+  #toTop.show{opacity:1; pointer-events:auto}
+
+  /* Reveal animations + active nav */
+  .reveal{opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.show{opacity:1; transform:none}
+  header nav a.active{background:var(--card-bg); color:#fff}
+
   /* Thank you section visibility */
   #thanks{display:none}
   #thanks:target{display:block}
@@ -146,6 +177,7 @@
   </style>
 </head>
 <body>
+  <a href="#home" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
   <!-- Header / Navigation -->
   <header>
     <div class="container nav">
@@ -367,6 +399,9 @@
             <span>Call Now</span>
             <strong>+49 176 62350091</strong>
           </a>
+          <a class="btn btn-whatsapp" href="https://wa.me/4917662350091?text=Hi%20Deejay%20Samba%2C%20I%27d%20like%20to%20book%20you%20for%20an%20event" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+            WhatsApp
+          </a>
         </div>
         <small style="color:var(--muted)">We’ll reply by email shortly after you submit.</small>
       </form>
@@ -414,9 +449,14 @@
           </svg>
           <span class="label">Instagram</span>
         </a>
+        <span>·</span>
+        <a id="muteIntro" href="#" title="Mute intro sound">Mute intro sound</a>
       </div>
     </div>
   </footer>
+
+  <!-- Back to top button -->
+  <a id="toTop" class="btn btn-ghost" href="#home" aria-label="Back to top">↑</a>
 
   <script>
     // Fallback: generate a short WAV preview if MP3 files are not present
@@ -536,6 +576,7 @@
 
     // Optional: brief ambient crowd sound on page load (auto-stops after ~4s)
     (function(){
+      try{ if (localStorage.getItem('muteIntro') === '1') return; }catch(e){}
       const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return; // be respectful
 
@@ -581,6 +622,42 @@
       // Attempt soon after load; browsers may delay until interaction
       if (document.readyState === 'complete') playCrowd();
       else window.addEventListener('load', playCrowd, {once:true});
+    })();
+
+    // Active nav, reveal on scroll, toTop toggle, mute-intro toggle
+    (function(){
+      // Active nav link
+      const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
+      const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      const linkFor = id => navLinks.find(a => a.getAttribute('href') === '#' + id);
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e => {
+          if (e.isIntersecting){
+            navLinks.forEach(a=>a.classList.remove('active'));
+            const l = linkFor(e.target.id); if (l) l.classList.add('active');
+          }
+        })
+      }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+      sections.forEach(s => s && io.observe(s));
+
+      // Reveal elements
+      const targets = Array.from(document.querySelectorAll('.card, .event, .about p, .section-title, .cta, .platforms, .embed-card'));
+      targets.forEach(el => el.classList.add('reveal'));
+      const ro = new IntersectionObserver((ents)=>{
+        ents.forEach(en=>{ if (en.isIntersecting){ en.target.classList.add('show'); ro.unobserve(en.target); } });
+      }, {threshold:.08});
+      targets.forEach(el=>ro.observe(el));
+
+      // Back to top visibility
+      const toTop = document.getElementById('toTop');
+      if (toTop){
+        const onScroll = ()=>{ if (window.scrollY>280) toTop.classList.add('show'); else toTop.classList.remove('show'); };
+        window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+      }
+
+      // Mute intro toggle in footer
+      const mute = document.getElementById('muteIntro');
+      if (mute) mute.addEventListener('click', (e)=>{ e.preventDefault(); try{ localStorage.setItem('muteIntro','1'); alert('Intro sound muted. Refresh to apply.'); }catch(_){} });
     })();
   </script>
 </body>
