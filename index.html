@@ -122,6 +122,10 @@
     /* Footer */
     footer{padding:40px 0; border-top:1px solid var(--card-border); color:var(--muted)}
 
+  /* Thank you section visibility */
+  #thanks{display:none}
+  #thanks:target{display:block}
+
     /* Small screens */
     @media (max-width:640px){
       .headline{font-size:clamp(1.75rem, 6vw + .5rem, 2.5rem)}
@@ -299,6 +303,9 @@
         <!-- FormSubmit options -->
         <input type="hidden" name="_subject" value="New Booking Request — Deejay Samba" />
         <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_autoresponse" value="Thanks for reaching out to Deejay Samba. Your request has been received — I’ll get back to you shortly." />
+        <input type="hidden" name="_next" value="https://babucarr186-ai.github.io/Dj-samba-/#thanks" />
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="field">
           <label for="name">Name</label>
@@ -321,6 +328,20 @@
         </div>
         <small style="color:var(--muted)">We’ll reply by email shortly after you submit.</small>
       </form>
+    </div>
+  </section>
+
+  <!-- Thank You -->
+  <section id="thanks">
+    <div class="container">
+      <div class="card" role="status" aria-live="polite">
+        <h2 class="section-title" style="margin-bottom:8px">Thank you!</h2>
+        <p class="section-sub">Your message is on its way. I’ll reply to you by email as soon as possible.</p>
+        <div style="margin-top:12px">
+          <a class="btn btn-primary" href="#home">Back to Home</a>
+          <a class="btn btn-ghost" href="#bookings">Send another</a>
+        </div>
+      </div>
     </div>
   </section>
 
