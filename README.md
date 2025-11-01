@@ -22,7 +22,7 @@ If MP3s are missing, the site auto-generates short WAV demo loops so audio playe
 
 ## Booking form
 
-The form uses `mailto:` to send to `bookings@deejaysamba.com`. This opens the visitor's default email app. For a production-ready form with server-side handling, connect a service like Formspree, Basin, or a custom API and update the form `action` accordingly.
+The form uses `mailto:` to send to `ngumjoh@gmail.com`. This opens the visitor's default email app. For a production-ready form with server-side handling, connect a service like Formspree, Basin, or a custom API and update the form `action` accordingly.
 
 ## Preview locally (Windows)
 
@@ -43,7 +43,7 @@ python -m http.server 5500 ; start http://localhost:5500/index.html
 ## Customize
 
 - Colors and spacing live in CSS variables at the top of `index.html`.
-- Update the call number in the Booking section (`tel:+12025550147`).
+- Update the call number in the Booking section (`tel:+4917662350091`).
 
 ## License
 
