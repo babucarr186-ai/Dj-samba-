@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deejay Samba — Official</title>
+  <meta name="description" content="Deejay Samba — Rhythm-first DJ for Club Nights & Weddings. Afrobeats, Amapiano, Hip-Hop, Latin. Bookings and audio previews." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f; /* near-black */
+      --surface:#111118;
+      --fg:#f5f6fb; /* off-white */
+      --muted:#a7a9b4;
+      --pink:#ff2d55;
+      --teal:#00d2d3;
+      --accent-grad: linear-gradient(135deg, var(--pink), var(--teal));
+      --card-bg: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --blur-bg: rgba(10,10,14,0.55);
+      --maxw:1200px;
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; color:var(--fg);
+      background:
+        radial-gradient(1200px 800px at -10% -10%, rgba(255,45,85,.12), transparent 40%),
+        radial-gradient(1000px 700px at 110% 10%, rgba(0,210,211,.12), transparent 40%),
+        var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{width:100%; max-width:var(--maxw); margin-inline:auto; padding:0 20px}
+
+    /* Header / Navigation */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(14px); -webkit-backdrop-filter:saturate(180%) blur(14px);
+      background:var(--blur-bg); border-bottom:1px solid var(--card-border);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0}
+    .logo{font-weight:800; letter-spacing:.5px; font-size:1.25rem}
+    nav ul{display:flex; gap:18px; list-style:none; padding:0; margin:0; flex-wrap:wrap}
+    nav a{opacity:.9; padding:8px 12px; border-radius:999px; transition:all .2s ease}
+    nav a:hover{opacity:1; background:var(--card-bg)}
+
+    /* Buttons */
+    .btn{display:inline-block; padding:12px 18px; border-radius:999px; font-weight:700; letter-spacing:.2px; border:1px solid transparent; transition:transform .08s ease, box-shadow .2s ease}
+    .btn-primary{background:var(--accent-grad); color:#0d0f12; box-shadow:0 6px 16px rgba(255,45,85,.25), 0 6px 16px rgba(0,210,211,.25)}
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-ghost{background:transparent; color:var(--fg); border-color:var(--card-border)}
+
+    /* Hero */
+    .hero{position:relative; min-height:90vh; display:grid; place-items:center; text-align:center}
+    .hero::before{content:""; position:absolute; inset:0; background:
+      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65)),
+      url('assets/images/dj-hero.jpg') center/cover no-repeat,
+      url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1960&auto=format&fit=crop') center/cover no-repeat;
+      z-index:-1; filter:saturate(1.05) brightness(.95);
+    }
+    .hero-inner{padding:88px 20px 56px}
+    .kicker{font-weight:700; font-size:.9rem; opacity:.9; letter-spacing:.12em; text-transform:uppercase; color:#e9f7f7}
+    .headline{font-size:clamp(2rem, 4.5vw + 1rem, 3.5rem); line-height:1.1; margin:10px auto 14px; max-width:820px; font-weight:800}
+    .sub{max-width:760px; margin:0 auto 22px; color:var(--muted)}
+    .cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:8px}
+
+    /* Sections */
+  section{padding:70px 0; scroll-margin-top:86px}
+    .section-title{font-size:1.8rem; margin:0 0 18px; font-weight:800}
+    .section-sub{margin-top:-6px; color:var(--muted)}
+
+    /* Cards & grids */
+    .grid{display:grid; gap:18px; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))}
+    .card{background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .card h3{margin:0 0 10px; font-size:1.1rem}
+    .card p{margin:0 0 12px; color:var(--muted)}
+    .track{display:flex; flex-direction:column; gap:6px; margin:8px 0}
+    .track-label{font-size:.9rem; color:var(--muted)}
+    audio{width:100%}
+
+    /* Events */
+    .event{padding:18px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04)); border:1px solid var(--card-border)}
+    .event h4{margin:0 0 6px}
+    .event p{margin:0; color:var(--muted)}
+
+    /* About */
+    .about{display:grid; gap:18px; grid-template-columns:1.2fr}
+
+    /* Booking */
+    form{display:grid; gap:12px; max-width:680px}
+    .field{display:grid; gap:6px}
+    input, textarea{background:transparent; border:1px solid var(--card-border); border-radius:12px; padding:12px 14px; color:var(--fg); outline:none}
+    textarea{min-height:120px; resize:vertical}
+    .form-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .call{display:inline-flex; align-items:center; gap:10px}
+
+    /* Footer */
+    footer{padding:40px 0; border-top:1px solid var(--card-border); color:var(--muted)}
+
+    /* Small screens */
+    @media (max-width:640px){
+      .headline{font-size:clamp(1.75rem, 6vw + .5rem, 2.5rem)}
+      nav ul{gap:8px}
+      .btn{padding:11px 14px}
+      section{padding:56px 0}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav">
+      <div class="logo">Deejay Samba</div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#beats">Beats</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#bookings">Bookings</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero-inner container">
+      <div class="kicker">Deejay Samba</div>
+      <h1 class="headline">Rhythm-first DJ for Club Nights & Weddings.</h1>
+      <p class="sub">Afrobeats • Amapiano • Hip-Hop • Latin — precision mixing and global sounds tailored for any crowd.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#bookings">Book Now</a>
+        <a class="btn btn-ghost" href="#beats">Preview Beats</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beats -->
+  <section id="beats">
+    <div class="container">
+      <h2 class="section-title">Beats</h2>
+      <p class="section-sub">Short previews by style. Replace the MP3s in <code>assets/audio/</code> when you’re ready.</p>
+      <div class="grid">
+        <!-- Afrobeats -->
+        <div class="card">
+          <h3>Afrobeats</h3>
+          <div class="track">
+            <span class="track-label">Afrobeats 01</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="afrobeats">
+              <source src="assets/audio/afrobeats-1.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+          <div class="track">
+            <span class="track-label">Afrobeats 02</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="afrobeats">
+              <source src="assets/audio/afrobeats-2.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+        <!-- Amapiano -->
+        <div class="card">
+          <h3>Amapiano</h3>
+          <div class="track">
+            <span class="track-label">Amapiano 01</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="amapiano">
+              <source src="assets/audio/amapiano-1.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+          <div class="track">
+            <span class="track-label">Amapiano 02</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="amapiano">
+              <source src="assets/audio/amapiano-2.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+        <!-- Hip-Hop -->
+        <div class="card">
+          <h3>Hip-Hop</h3>
+          <div class="track">
+            <span class="track-label">Hip-Hop 01</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="hiphop">
+              <source src="assets/audio/hiphop-1.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+          <div class="track">
+            <span class="track-label">Hip-Hop 02</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="hiphop">
+              <source src="assets/audio/hiphop-2.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+        <!-- Latin -->
+        <div class="card">
+          <h3>Latin</h3>
+          <div class="track">
+            <span class="track-label">Latin 01</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="latin">
+              <source src="assets/audio/latin-1.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+          <div class="track">
+            <span class="track-label">Latin 02</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="latin">
+              <source src="assets/audio/latin-2.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+        <!-- Live Mix Highlights -->
+        <div class="card">
+          <h3>Live Mix Highlights</h3>
+          <p class="track-label">Short live recording snippets</p>
+          <div class="track">
+            <span class="track-label">Highlight 01</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="mix">
+              <source src="assets/audio/live-mix-1.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+          <div class="track">
+            <span class="track-label">Highlight 02</span>
+            <audio controls preload="none" data-fallback="beat" data-fallback-genre="mix">
+              <source src="assets/audio/live-mix-2.mp3" type="audio/mpeg" />
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events -->
+  <section id="events">
+    <div class="container">
+      <h2 class="section-title">Events</h2>
+      <p class="section-sub">From high-energy club nights to elegant weddings and premium private events.</p>
+      <div class="grid">
+        <div class="event">
+          <h4>Club / Disco Events</h4>
+          <p>Energetic club nights, guest DJ sets, and festival appearances with crowd-moving selections.</p>
+        </div>
+        <div class="event">
+          <h4>Weddings</h4>
+          <p>Modern, multicultural weddings with smooth transitions, tasteful MCing, and curated vibes.</p>
+        </div>
+        <div class="event">
+          <h4>Private & Corporate Events</h4>
+          <p>Brand parties, corporate nights, and premium private events tailored to your audience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container about">
+      <h2 class="section-title">About</h2>
+      <p>Versatile DJ known for tight transitions and crowd reading. Expert in Afrobeats, Amapiano, Hip-Hop, and Latin. Plays across Europe and Africa, merging global sounds with precision mixing.</p>
+    </div>
+  </section>
+
+  <!-- Bookings -->
+  <section id="bookings">
+    <div class="container">
+      <h2 class="section-title">Bookings</h2>
+      <p class="section-sub">Tell me about your event and I’ll get back to you quickly.</p>
+      <form action="mailto:bookings@deejaysamba.com" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="Name" type="text" placeholder="Your full name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="Email" type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="details">Event Details</label>
+          <textarea id="details" name="Event Details" placeholder="Date, venue, expected crowd, music preferences…" required></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Send Booking Request</button>
+          <a class="btn btn-ghost call" href="tel:+12025550147" title="Call now">
+            <span>Call Now</span>
+            <strong>+1 202 555 0147</strong>
+          </a>
+        </div>
+        <small style="color:var(--muted)">Note: This form opens your default email app to send the message to bookings@deejaysamba.com.</small>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center">
+      <div>© 2025 Deejay Samba. All rights reserved.</div>
+      <div style="display:flex; gap:14px">
+        <a href="#beats">Beats</a>
+        <span>·</span>
+        <a href="#events">Events</a>
+        <span>·</span>
+        <a href="#bookings">Bookings</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fallback: generate a short WAV preview if MP3 files are not present
+    // So audio players always work during development.
+    (function(){
+      const genreBase = {
+        afrobeats: 148,
+        amapiano: 112,
+        hiphop: 90,
+        latin: 120,
+        mix: 124
+      };
+
+      function createBeatWav({seconds=6, sampleRate=44100, bpm=120, baseHz=100}){
+        const length = seconds * sampleRate;
+        const channels = 1;
+        const data = new Int16Array(length * channels);
+
+        // Simple pattern: kick on 1 & 3, hat on 8ths, tone stab on 2 & 4
+        const spb = sampleRate * 60 / bpm; // samples per beat
+
+        for(let i=0;i<length;i++){
+          const t = i / sampleRate;
+          const beatPos = (i % spb) / spb; // 0..1 within beat
+
+          // kick: short exponential decay click
+          let kick = 0;
+          if (beatPos < 0.04 || (beatPos > 0.5 && beatPos < 0.54)) {
+            const k = (beatPos % 0.5) * 25; // 0..1 quickly
+            kick = Math.sin(2*Math.PI*(baseHz*0.9 + 40*(1-k)) * t) * Math.exp(-k*8);
+          }
+
+          // hat: 8th notes, noise burst
+          let hat = 0;
+          const eighth = (i % (spb/2)) / (spb/2);
+          if (eighth < 0.02){
+            const n = (Math.random()*2-1) * Math.exp(-eighth*50);
+            hat = n * 0.25;
+          }
+
+          // stab: musical tone on beats 2 & 4
+          let stab = 0;
+          if ((beatPos > 0.25 && beatPos < 0.30) || (beatPos > 0.75 && beatPos < 0.80)){
+            const env = Math.exp(-(beatPos%0.5)*15);
+            const f = baseHz*2;
+            stab = (Math.sin(2*Math.PI*f*t) + Math.sin(2*Math.PI*f*1.5*t)*0.5) * 0.18 * env;
+          }
+
+          let v = kick + hat + stab;
+          // soft clip
+          if (v>1) v = 1; if (v<-1) v = -1;
+          data[i] = v * 32767;
+        }
+
+        // Build WAV header
+        const bytesPerSample = 2;
+        const blockAlign = channels * bytesPerSample;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = data.length * bytesPerSample;
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+        let p = 0;
+        function writeStr(s){ for(let i=0;i<s.length;i++) view.setUint8(p++, s.charCodeAt(i)); }
+        function write16(v){ view.setUint16(p, v, true); p+=2; }
+        function write32(v){ view.setUint32(p, v, true); p+=4; }
+
+        writeStr('RIFF');
+        write32(36 + dataSize);
+        writeStr('WAVE');
+        writeStr('fmt ');
+        write32(16); // PCM
+        write16(1);  // format
+        write16(channels);
+        write32(sampleRate);
+        write32(byteRate);
+        write16(blockAlign);
+        write16(16); // bits
+        writeStr('data');
+        write32(dataSize);
+
+        // PCM data
+        const out = new Int16Array(buffer, 44);
+        out.set(data);
+
+        return new Blob([buffer], {type:'audio/wav'});
+      }
+
+      function ensureFallback(audio){
+        if (audio.dataset._hasFallback) return;
+        const genre = (audio.getAttribute('data-fallback-genre')||'mix').toLowerCase();
+        const bpm = genreBase[genre] || 120;
+        const baseHz = genre === 'amapiano' ? 60 : genre === 'hiphop' ? 55 : genre === 'latin' ? 110 : genre === 'afrobeats' ? 100 : 95;
+        const blob = createBeatWav({seconds:8, bpm, baseHz});
+        const url = URL.createObjectURL(blob);
+        audio.src = url; // acts as <source> fallback
+        audio.dataset._hasFallback = '1';
+      }
+
+      document.querySelectorAll('audio[data-fallback="beat"]').forEach(audio => {
+        // If MP3 fails to load or play, use generated WAV
+        audio.addEventListener('error', () => ensureFallback(audio));
+        // Some browsers won't fire error until play attempt; also proactively set fallback after 200ms if no duration
+        let checked = false;
+        const t = setTimeout(() => {
+          if (!checked && (isNaN(audio.duration) || !isFinite(audio.duration))) {
+            // Try to load the <source>; if it stalls, we still have controls
+            // We leave MP3 as primary; fallback engages on first play error
+          }
+        }, 200);
+        audio.addEventListener('play', () => {
+          checked = true;
+          // If it still doesn't have a readyState, give it a fallback
+          if (audio.readyState === 0) ensureFallback(audio);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
