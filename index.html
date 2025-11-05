@@ -398,15 +398,15 @@
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="field">
           <label for="name" data-i18n="book.name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your full name" required />
+          <input id="name" name="name" type="text" placeholder="Your full name" data-i18n-placeholder="book.phName" required />
         </div>
         <div class="field">
           <label for="email" data-i18n="book.email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <input id="email" name="email" type="email" placeholder="you@example.com" data-i18n-placeholder="book.phEmail" required />
         </div>
         <div class="field">
           <label for="details" data-i18n="book.details">Event Details</label>
-          <textarea id="details" name="message" placeholder="Date, venue, expected crowd, music preferences…" required></textarea>
+          <textarea id="details" name="message" placeholder="Date, venue, expected crowd, music preferences…" data-i18n-placeholder="book.phDetails" required></textarea>
         </div>
         <div class="form-actions">
           <button class="btn btn-primary" type="submit" data-i18n="book.submit">Send Booking Request</button>
@@ -546,7 +546,10 @@
             submit: "Send Booking Request",
             note: "We’ll reply by email shortly after you submit.",
             subject: "New Booking Request — Deejay Samba",
-            autoresponse: "Thanks for reaching out to Deejay Samba. Your request has been received — I’ll get back to you shortly."
+            autoresponse: "Thanks for reaching out to Deejay Samba. Your request has been received — I’ll get back to you shortly.",
+            phName: "Your full name",
+            phEmail: "you@example.com",
+            phDetails: "Date, venue, expected crowd, music preferences…"
           },
           thanks: {
             title: "Thank you!",
@@ -597,7 +600,10 @@
             submit: "Buchungsanfrage senden",
             note: "Wir melden uns per E‑Mail kurz nach dem Absenden.",
             subject: "Neue Buchungsanfrage — Deejay Samba",
-            autoresponse: "Danke für Ihre Nachricht an Deejay Samba. Ihre Anfrage ist eingegangen — ich melde mich in Kürze."
+            autoresponse: "Danke für Ihre Nachricht an Deejay Samba. Ihre Anfrage ist eingegangen — ich melde mich in Kürze.",
+            phName: "Ihr vollständiger Name",
+            phEmail: "sie@example.com",
+            phDetails: "Datum, Location, erwartete Gästezahl, Musikwünsche…"
           },
           thanks: {
             title: "Danke!",
@@ -624,6 +630,14 @@
           let val = dict;
           for (const p of parts){ val = val && val[p]; }
           if (typeof val === 'string') el.textContent = val;
+        });
+        // placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.getAttribute('data-i18n-placeholder');
+          const parts = key.split('.');
+          let val = dict;
+          for (const p of parts){ val = val && val[p]; }
+          if (typeof val === 'string') el.setAttribute('placeholder', val);
         });
         // update form hidden fields if present
         const subj = document.querySelector('input[name="_subject"]');
