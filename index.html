@@ -11,17 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://babucarr186-ai.github.io/Dj-samba-/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>\
-    <defs>\
-      <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
-        <stop offset='0' stop-color='%23ff2d55'/>\
-        <stop offset='1' stop-color='%2300d2d3'/>\
-      </linearGradient>\
-    </defs>\
-    <rect x='4' y='4' width='56' height='56' rx='12' fill='url(%23g)'/>\
-    <text x='50%' y='54%' font-family='Poppins, Arial' font-size='26' text-anchor='middle' fill='%230b0b0f' font-weight='700'>DS</text>\
-  </svg>" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ff2d55'/><stop offset='1' stop-color='%2300d2d3'/></linearGradient></defs><rect x='4' y='4' width='56' height='56' rx='12' fill='url(%23g)'/><text x='50%' y='54%' font-family='Poppins, Arial' font-size='26' text-anchor='middle' fill='%230b0b0f' font-weight='700'>DS</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://open.spotify.com" crossorigin>
@@ -33,7 +23,7 @@
       --bg:#0b0b0f; /* near-black */
       --surface:#111118;
       --fg:#f5f6fb; /* off-white */
-      --muted:#a7a9b4;
+      --muted:#b8bac4; /* improved contrast from #a7a9b4 */
       --pink:#ff2d55;
       --teal:#00d2d3;
   --ig-a:#f58529; --ig-b:#dd2a7b; --ig-c:#8134af; --ig-d:#515bd4;
@@ -70,6 +60,7 @@
     nav ul{display:flex; gap:18px; list-style:none; padding:0; margin:0; flex-wrap:wrap}
     nav a{opacity:.9; padding:8px 12px; border-radius:999px; transition:all .2s ease}
     nav a:hover{opacity:1; background:var(--card-bg)}
+    nav a:focus{opacity:1; background:var(--card-bg); outline:2px solid var(--teal); outline-offset:2px}
   .nav .social svg{display:block; width:20px; height:20px; fill:currentColor}
   .social{display:inline-flex; align-items:center; gap:8px}
   .social svg{display:block; width:20px; height:20px; fill:currentColor}
@@ -84,6 +75,8 @@
     .btn{display:inline-block; padding:12px 18px; border-radius:999px; font-weight:700; letter-spacing:.2px; border:1px solid transparent; transition:transform .08s ease, box-shadow .2s ease}
   .btn-primary{background:var(--accent-grad); color:#0d0f12; box-shadow:0 6px 16px rgba(255,45,85,.25), 0 6px 16px rgba(0,210,211,.25); background-size:200% 200%; animation:btnGlow 10s linear infinite}
     .btn-primary:hover{transform:translateY(-1px)}
+    .btn:focus{outline:2px solid var(--teal); outline-offset:3px}
+    .btn-primary:focus{outline-color:var(--pink)}
     .btn-ghost{background:transparent; color:var(--fg); border-color:var(--card-border)}
   .btn-spotify{background:linear-gradient(135deg, var(--spotify), #19a64a); color:#0d0f12}
   .btn-soundcloud{background:linear-gradient(135deg, var(--sc), #ff5500); color:#0d0f12}
@@ -109,7 +102,12 @@
       transform-origin: 50% 50%;
     }
     @keyframes spin{ to{ transform:rotate(360deg)} }
-    @media (prefers-reduced-motion: reduce){ .hero::after{ animation:none; opacity:.22 } }
+    @media (prefers-reduced-motion: reduce){ 
+      .hero::after{ animation:none; opacity:.22 }
+      .btn-primary{ animation:none }
+      .eq span{ animation:none; height:8px }
+      .reveal{ transition:none; opacity:1; transform:none }
+    }
     .hero-inner{padding:88px 20px 56px}
     .kicker{font-weight:700; font-size:.9rem; opacity:.9; letter-spacing:.12em; text-transform:uppercase; color:#e9f7f7}
   .headline{font-size:clamp(2rem, 5.5vw + 1rem, 4.4rem); line-height:1.08; margin:10px auto 14px; max-width:880px; font-weight:800}
@@ -153,7 +151,8 @@
     /* Booking */
     form{display:grid; gap:12px; max-width:680px}
     .field{display:grid; gap:6px}
-    input, textarea{background:transparent; border:1px solid var(--card-border); border-radius:12px; padding:12px 14px; color:var(--fg); outline:none}
+    input, textarea{background:transparent; border:1px solid var(--card-border); border-radius:12px; padding:12px 14px; color:var(--fg); outline:none; transition:border-color .2s ease}
+    input:focus, textarea:focus{border-color:var(--teal); box-shadow:0 0 0 3px rgba(0,210,211,.15)}
     textarea{min-height:120px; resize:vertical}
     .form-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
     .call{display:inline-flex; align-items:center; gap:10px}
@@ -198,7 +197,7 @@
   </style>
 </head>
 <body>
-  <a href="#home" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
+  <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
   <!-- Header / Navigation -->
   <header>
     <div class="container nav">
@@ -221,6 +220,7 @@
     </div>
   </header>
 
+  <main id="main-content">
   <!-- Hero -->
   <section class="hero" id="home" aria-label="Hero">
     <div class="hero-inner container">
@@ -367,11 +367,11 @@
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="field">
           <label for="name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your full name" required />
+          <input id="name" name="name" type="text" placeholder="Your full name" required autocomplete="name" />
         </div>
         <div class="field">
           <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
         </div>
         <div class="field">
           <label for="details">Event Details</label>
@@ -405,6 +405,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- Footer -->
   <footer>
