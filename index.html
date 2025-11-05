@@ -28,6 +28,7 @@
   <link rel="preconnect" href="https://w.soundcloud.com" crossorigin>
   <link rel="preconnect" href="https://soundcloud.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --bg:#0b0b0f; /* near-black */
@@ -374,6 +375,34 @@
     </div>
   </section>
 
+  <!-- Photos (Galleries + optional uploads) -->
+  <section id="photos">
+    <div class="container">
+      <h2 class="section-title" data-i18n="photos.title">Event Photos</h2>
+      <p class="section-sub" data-i18n="photos.sub">Clubs, Weddings, and Private events — drag-and-drop grid. Optional uploads when storage is connected.</p>
+      <div class="card" style="padding:14px; margin-bottom:12px">
+        <div class="photos-controls" style="display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap">
+          <div class="tabs" role="tablist" aria-label="Photo categories" style="display:inline-flex; gap:6px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:999px; padding:4px">
+            <button class="tab active" role="tab" aria-selected="true" data-tab="clubs" style="border:0; background:linear-gradient(135deg, var(--pink), var(--teal)); color:#0d0f12; font-weight:800; border-radius:999px; padding:8px 12px; cursor:pointer">Clubs</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="weddings" style="border:0; background:transparent; color:var(--fg); opacity:.85; font-weight:800; border-radius:999px; padding:8px 12px; cursor:pointer">Weddings</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="private" style="border:0; background:transparent; color:var(--fg); opacity:.85; font-weight:800; border-radius:999px; padding:8px 12px; cursor:pointer">Private</button>
+          </div>
+          <div class="upload" style="display:inline-flex; gap:8px; align-items:center">
+            <input type="file" id="mediaInput" accept="image/*,video/*" multiple hidden>
+            <button id="uploadBtn" class="btn btn-primary" style="display:none" data-i18n="photos.upload">Upload media</button>
+          </div>
+        </div>
+        <div class="hint" id="photosHint" style="margin-top:8px; color:var(--muted)">
+          <span data-i18n="photos.hint">Uploads are disabled until storage is connected. Add assets/config.json to enable direct uploads.</span>
+        </div>
+      </div>
+
+      <div class="gallery" data-category="clubs" style="display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr))"></div>
+      <div class="gallery" data-category="weddings" hidden style="display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr))"></div>
+      <div class="gallery" data-category="private" hidden style="display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr))"></div>
+    </div>
+  </section>
+
   <!-- About -->
   <section id="about">
     <div class="container about">
@@ -616,6 +645,19 @@
           }
         }
       };
+      // i18n: photos
+      translations.en.photos = {
+        title: "Event Photos",
+        sub: "Clubs, Weddings, and Private events — drag-and-drop grid. Optional uploads when storage is connected.",
+        upload: "Upload media",
+        hint: "Uploads are disabled until storage is connected. Add assets/config.json to enable direct uploads."
+      };
+      translations.de.photos = {
+        title: "Eventfotos",
+        sub: "Clubs, Hochzeiten und Privatevents — Rasteransicht. Uploads optional, wenn der Speicher verbunden ist.",
+        upload: "Medien hochladen",
+        hint: "Uploads sind deaktiviert, bis der Speicher verbunden ist. Fügen Sie assets/config.json hinzu, um Uploads zu aktivieren."
+      };
 
       function applyTranslations(lang){
         const dict = translations[lang] || translations.en;
@@ -684,7 +726,7 @@
       sections.forEach(s => s && io.observe(s));
 
       // Reveal elements
-      const targets = Array.from(document.querySelectorAll('.card, .event, .about p, .section-title, .cta, .platforms, .embed-card'));
+  const targets = Array.from(document.querySelectorAll('.card, .event, .about p, .section-title, .cta, .platforms, .embed-card, #photos .gallery'));
       targets.forEach(el => el.classList.add('reveal'));
       const ro = new IntersectionObserver((ents)=>{
         ents.forEach(en=>{ if (en.isIntersecting){ en.target.classList.add('show'); ro.unobserve(en.target); } });
@@ -701,8 +743,109 @@
       // Mute intro toggle in footer
       const mute = document.getElementById('muteIntro');
       if (mute) mute.addEventListener('click', (e)=>{ e.preventDefault(); try{ localStorage.setItem('muteIntro','1'); alert('Intro sound muted. Refresh to apply.'); }catch(_){} });
+
+      // Photos: tabs, gallery, optional Supabase uploads
+      const tabBtns = document.querySelectorAll('#photos .tab');
+      const galleries = document.querySelectorAll('#photos .gallery');
+      tabBtns.forEach(btn => btn.addEventListener('click', ()=>{
+        tabBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); b.style.background='transparent'; b.style.color=''; b.style.opacity='.85'; });
+        btn.classList.add('active'); btn.setAttribute('aria-selected','true'); btn.style.background='linear-gradient(135deg, var(--pink), var(--teal))'; btn.style.color='#0d0f12'; btn.style.opacity='1';
+        const tab = btn.getAttribute('data-tab');
+        galleries.forEach(g => { g.hidden = g.getAttribute('data-category') !== tab; });
+      }));
+
+      const uploadBtn = document.getElementById('uploadBtn');
+      const mediaInput = document.getElementById('mediaInput');
+      const photosHint = document.getElementById('photosHint');
+
+      // Storage config loader
+      async function loadConfig(){
+        try{
+          const res = await fetch('assets/config.json', { cache: 'no-store' });
+          if (!res.ok) return null; return await res.json();
+        }catch{ return null; }
+      }
+
+      function addMediaToGallery(category, url){
+        const g = document.querySelector(`#photos .gallery[data-category="${category}"]`);
+        if (!g) return;
+        const isVideo = /\.(mp4|webm|ogg)$/i.test(url) || url.includes('video');
+        const fig = document.createElement('figure');
+        fig.className = 'card';
+        fig.style.padding = '0';
+        fig.style.overflow = 'hidden';
+        if (isVideo){
+          const v = document.createElement('video'); v.src = url; v.controls = true; v.playsInline = true; v.preload='metadata';
+          v.style.width='100%'; v.style.height='100%'; v.style.display='block'; v.style.objectFit='cover';
+          fig.appendChild(v);
+        } else {
+          const img = document.createElement('img'); img.src = url; img.loading='lazy'; img.alt='';
+          img.style.width='100%'; img.style.height='100%'; img.style.display='block'; img.style.objectFit='cover';
+          fig.appendChild(img);
+        }
+        g.appendChild(fig);
+      }
+
+      function sanitizeName(name){
+        return name.toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/-+/g,'-').replace(/^[-.]+|[-.]+$/g,'');
+      }
+
+      async function initStorage(){
+        const cfg = await loadConfig();
+        if (!cfg || !cfg.storage || cfg.storage.provider !== 'supabase'){
+          // No storage configured — keep uploads hidden
+          if (photosHint) photosHint.style.display = '';
+          return;
+        }
+
+        if (photosHint) photosHint.style.display = 'none';
+        if (uploadBtn) uploadBtn.style.display = 'inline-block';
+
+        // Supabase client
+        const supa = window.supabase && window.supabase.createClient ? window.supabase.createClient(cfg.storage.supabaseUrl, cfg.storage.supabaseAnonKey) : null;
+        if (!supa){ console.warn('Supabase SDK missing'); return; }
+
+        const buckets = cfg.storage.buckets || { clubs:'clubs', weddings:'weddings', private:'private' };
+
+        async function listCategory(cat){
+          const bucket = buckets[cat]; if (!bucket) return;
+          const { data, error } = await supa.storage.from(bucket).list('', { limit: 100, sortBy:{ column:'name', order:'desc' } });
+          if (error){ console.warn('List error', error); return; }
+          data.forEach(item => {
+            const { data: pub } = supa.storage.from(bucket).getPublicUrl(item.name);
+            if (pub && pub.publicUrl) addMediaToGallery(cat, pub.publicUrl);
+          });
+        }
+
+        // initial load
+        await Promise.all(['clubs','weddings','private'].map(listCategory));
+
+        // uploads
+        uploadBtn?.addEventListener('click', ()=> mediaInput?.click());
+        mediaInput?.addEventListener('change', async ()=>{
+          const activeTab = document.querySelector('#photos .tab.active')?.getAttribute('data-tab') || 'clubs';
+          const bucket = buckets[activeTab]; if (!bucket) return;
+          const files = Array.from(mediaInput.files || []);
+          for (const file of files){
+            const ext = file.name.split('.').pop() || 'bin';
+            const base = sanitizeName(file.name.replace(/\.[^.]+$/, ''));
+            const key = `${Date.now()}-${base}.${ext}`;
+            const { error } = await supa.storage.from(bucket).upload(key, file, { upsert:false, contentType: file.type || undefined });
+            if (!error){
+              const { data: pub } = supa.storage.from(bucket).getPublicUrl(key);
+              if (pub && pub.publicUrl) addMediaToGallery(activeTab, pub.publicUrl);
+            } else {
+              console.warn('Upload failed', error);
+              alert('Upload failed: ' + (error.message || 'unknown error'));
+            }
+          }
+          mediaInput.value = '';
+        });
+      }
+
+      initStorage();
     })();
   </script>
-  <!-- version: v2025-11-05-3 i18n EN/DE -->
+  <!-- version: v2025-11-05-4 photos + upload scaffold -->
 </body>
 </html>
