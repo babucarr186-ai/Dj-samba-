@@ -650,13 +650,15 @@
         title: "Event Photos",
         sub: "Clubs, Weddings, and Private events — drag-and-drop grid. Optional uploads when storage is connected.",
         upload: "Upload media",
-        hint: "Uploads are disabled until storage is connected. Add assets/config.json to enable direct uploads."
+        hint: "Uploads are disabled until storage is connected. Add assets/config.json to enable direct uploads.",
+        hintInvalid: "Uploads are disabled: the storage config is invalid. Please add a valid Supabase Project URL and anon key in assets/config.json."
       };
       translations.de.photos = {
         title: "Eventfotos",
         sub: "Clubs, Hochzeiten und Privatevents — Rasteransicht. Uploads optional, wenn der Speicher verbunden ist.",
         upload: "Medien hochladen",
-        hint: "Uploads sind deaktiviert, bis der Speicher verbunden ist. Fügen Sie assets/config.json hinzu, um Uploads zu aktivieren."
+        hint: "Uploads sind deaktiviert, bis der Speicher verbunden ist. Fügen Sie assets/config.json hinzu, um Uploads zu aktivieren.",
+        hintInvalid: "Uploads sind deaktiviert: Die Speicher-Konfiguration ist ungültig. Bitte eine gültige Supabase-Projekt-URL und Anon-Key in assets/config.json eintragen."
       };
 
       function applyTranslations(lang){
@@ -792,16 +794,22 @@
 
       async function initStorage(){
         const cfg = await loadConfig();
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        const t = (k)=>{
+          try{ return translations[currentLang].photos[k]; }catch(_){ return translations.en.photos[k]; }
+        };
         if (!cfg || !cfg.storage || cfg.storage.provider !== 'supabase'){
           // No storage configured — keep uploads hidden
-          if (photosHint) photosHint.style.display = '';
+          if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hint'); }
           return;
         }
-        const urlOk = !!cfg.storage.supabaseUrl && !/YOUR-|YOUR_/i.test(String(cfg.storage.supabaseUrl));
-        const keyOk = !!cfg.storage.supabaseAnonKey && !/YOUR-|YOUR_/i.test(String(cfg.storage.supabaseAnonKey));
+        const urlStr = String(cfg.storage.supabaseUrl || '');
+        const keyStr = String(cfg.storage.supabaseAnonKey || '');
+        const urlOk = /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(urlStr);
+        const keyOk = keyStr.startsWith('eyJ') && keyStr.length > 100;
         if (!(urlOk && keyOk)){
-          // Config file exists but keys are placeholders — keep uploads hidden
-          if (photosHint) photosHint.style.display = '';
+          // Config file exists but invalid — keep uploads hidden and show guidance
+          if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hintInvalid'); }
           return;
         }
 
