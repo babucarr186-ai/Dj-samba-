@@ -798,8 +798,72 @@
         const t = (k)=>{
           try{ return translations[currentLang].photos[k]; }catch(_){ return translations.en.photos[k]; }
         };
-        if (!cfg || !cfg.storage || cfg.storage.provider !== 'supabase'){
+        if (!cfg || !cfg.storage){
           // No storage configured — keep uploads hidden
+          if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hint'); }
+          return;
+        }
+
+        // Option 1: Airtable (no-code forms + embedded galleries)
+        if (cfg.storage.provider === 'airtable'){
+          // Expect structure:
+          // {
+          //   "storage": {
+          //     "provider": "airtable",
+          //     "formUrl": "https://airtable.com/...?...&prefill_Category={category}",
+          //     "embedUrls": { "clubs": "https://airtable.com/embed/...", "weddings": "...", "private": "..." }
+          //   }
+          // }
+          const formUrl = String(cfg.storage.formUrl || '');
+          const embeds = cfg.storage.embedUrls || {};
+
+          // Hide hint if we have at least one embed
+          const hasAny = Boolean(embeds.clubs || embeds.weddings || embeds.private);
+          if (hasAny && photosHint) photosHint.style.display = 'none';
+
+          // Render each gallery as an embedded Airtable view (if provided)
+          ['clubs','weddings','private'].forEach(cat => {
+            const g = document.querySelector(`#photos .gallery[data-category="${cat}"]`);
+            if (!g) return;
+            const src = embeds[cat];
+            if (!src) return;
+            // Wrap in our embed card for consistent styling + perimeter glow
+            const wrapper = document.createElement('div');
+            wrapper.className = 'embed-card';
+            const iframe = document.createElement('iframe');
+            iframe.loading = 'lazy';
+            iframe.referrerPolicy = 'no-referrer';
+            iframe.allow = 'fullscreen';
+            iframe.title = `Airtable ${cat} gallery`;
+            iframe.style.height = '600px';
+            iframe.src = src;
+            wrapper.appendChild(iframe);
+            g.innerHTML = '';
+            g.appendChild(wrapper);
+          });
+
+          // Convert Upload button to open the Airtable Form in a new tab with the active category prefilled
+          if (uploadBtn){
+            uploadBtn.style.display = 'inline-block';
+            uploadBtn.addEventListener('click', ()=>{
+              const activeTab = document.querySelector('#photos .tab.active')?.getAttribute('data-tab') || 'clubs';
+              let url = formUrl;
+              if (url.includes('{category}')){
+                url = url.replace('{category}', encodeURIComponent(activeTab));
+              } else {
+                url += (url.includes('?') ? '&' : '?') + 'prefill_Category=' + encodeURIComponent(activeTab);
+              }
+              window.open(url, '_blank', 'noopener');
+            });
+          }
+
+          // We don't use the file input with Airtable
+          if (mediaInput) mediaInput.remove();
+          return;
+        }
+
+        // Option 2: Supabase (direct client uploads)
+        if (cfg.storage.provider !== 'supabase'){
           if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hint'); }
           return;
         }
@@ -861,6 +925,6 @@
       initStorage();
     })();
   </script>
-  <!-- version: v2025-11-05-4 photos + upload scaffold -->
+  <!-- version: v2025-11-06-1 photos: add Airtable option -->
 </body>
 </html>

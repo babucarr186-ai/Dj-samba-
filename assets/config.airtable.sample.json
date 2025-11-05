@@ -1,0 +1,11 @@
+{
+  "storage": {
+    "provider": "airtable",
+    "formUrl": "https://airtable.com/appXXXXXXXXXXXXXX/pagYYYYYYYYYYYY?prefill_Category={category}",
+    "embedUrls": {
+      "clubs": "https://airtable.com/embed/appXXXXXXXXXXXXXX/tblAAAAAAAAAAAA/viwCCCCCCCCCCCC?backgroundColor=orange&viewControls=on",
+      "weddings": "https://airtable.com/embed/appXXXXXXXXXXXXXX/tblBBBBBBBBBBBB/viwDDDDDDDDDDDD?backgroundColor=pink&viewControls=on",
+      "private": "https://airtable.com/embed/appXXXXXXXXXXXXXX/tblEEEEEEEEEEEE/viwFFFFFFFFFFFF?backgroundColor=green&viewControls=on"
+    }
+  }
+}
