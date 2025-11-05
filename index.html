@@ -51,6 +51,7 @@
     html{scroll-behavior:smooth}
     body{
       margin:0; font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; color:var(--fg);
+      line-height:1.55;
       background:
         radial-gradient(1200px 800px at -10% -10%, rgba(255,45,85,.12), transparent 40%),
         radial-gradient(1000px 700px at 110% 10%, rgba(0,210,211,.12), transparent 40%),
@@ -72,6 +73,7 @@
     nav ul{display:flex; gap:18px; list-style:none; padding:0; margin:0; flex-wrap:wrap}
     nav a{opacity:.9; padding:8px 12px; border-radius:999px; transition:all .2s ease}
     nav a:hover{opacity:1; background:var(--card-bg)}
+  .nav-toggle{display:none}
   .nav .social svg{display:block; width:20px; height:20px; fill:currentColor}
   .social{display:inline-flex; align-items:center; gap:8px}
   .social svg{display:block; width:20px; height:20px; fill:currentColor}
@@ -196,6 +198,14 @@
       .social .label{display:inline}
       .footer-bottom{flex-direction:column; justify-content:center}
       .footer-bottom .social-bar{margin-left:0; justify-content:center}
+
+      /* Mobile nav */
+      .nav{position:relative}
+      .nav-toggle{display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border:1px solid var(--card-border); border-radius:999px; background:transparent; color:var(--fg)}
+      header nav{position:absolute; top:calc(100% + 8px); right:14px; background:var(--blur-bg); border:1px solid var(--card-border); border-radius:12px; padding:8px; box-shadow:var(--shadow); display:none; min-width:200px}
+      header nav.open{display:block}
+      header nav ul{flex-direction:column; gap:6px}
+      header nav a{display:block; padding:10px 12px}
     }
 
     /* Very small phones */
@@ -206,6 +216,7 @@
       .platforms{justify-content:center}
       .platforms .btn{flex:1 1 160px; justify-content:center}
       .footer-links{justify-content:center; text-align:center}
+      body{font-size:16px}
     }
   </style>
 </head>
@@ -215,7 +226,8 @@
   <header>
     <div class="container nav">
       <div class="logo">Deejay Samba</div>
-      <nav aria-label="Primary">
+      <button class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" type="button">Menu</button>
+      <nav id="primaryNav" aria-label="Primary">
         <ul>
           <li><a href="#beats">Beats</a></li>
           <li><a href="#events">Events</a></li>
@@ -471,6 +483,24 @@
     // Active nav, reveal on scroll, toTop toggle
     (function(){
       // Active nav link
+      const navEl = document.getElementById('primaryNav');
+      const toggle = document.querySelector('.nav-toggle');
+      if (toggle && navEl){
+        toggle.addEventListener('click', ()=>{
+          const open = navEl.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        navEl.addEventListener('click', (e)=>{
+          const a = e.target.closest('a[href^="#"]');
+          if (a){ navEl.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+        });
+        document.addEventListener('click', (e)=>{
+          if (!navEl.contains(e.target) && !toggle.contains(e.target)){
+            navEl.classList.remove('open'); toggle.setAttribute('aria-expanded','false');
+          }
+        }, {passive:true});
+      }
+
       const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
       const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
       const linkFor = id => navLinks.find(a => a.getAttribute('href') === '#' + id);
