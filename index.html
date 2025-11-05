@@ -797,6 +797,13 @@
           if (photosHint) photosHint.style.display = '';
           return;
         }
+        const urlOk = !!cfg.storage.supabaseUrl && !/YOUR-|YOUR_/i.test(String(cfg.storage.supabaseUrl));
+        const keyOk = !!cfg.storage.supabaseAnonKey && !/YOUR-|YOUR_/i.test(String(cfg.storage.supabaseAnonKey));
+        if (!(urlOk && keyOk)){
+          // Config file exists but keys are placeholders — keep uploads hidden
+          if (photosHint) photosHint.style.display = '';
+          return;
+        }
 
         if (photosHint) photosHint.style.display = 'none';
         if (uploadBtn) uploadBtn.style.display = 'inline-block';

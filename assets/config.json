@@ -1,0 +1,12 @@
+{
+  "storage": {
+    "provider": "supabase",
+    "supabaseUrl": "https://YOUR-PROJECT.supabase.co",
+    "supabaseAnonKey": "YOUR_SUPABASE_ANON_KEY",
+    "buckets": {
+      "clubs": "clubs",
+      "weddings": "weddings",
+      "private": "private"
+    }
+  }
+}
