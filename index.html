@@ -238,7 +238,7 @@
   <section id="beats">
     <div class="container">
   <h2 class="section-title">Beats</h2>
-  <p class="section-sub">Short previews by style — powered by mini loops and visuals. Add your full tracks later via Spotify or SoundCloud embeds.</p>
+  <p class="section-sub">Short previews by style — powered by your MP3s if present, otherwise mini loops. Add MP3s under <code>assets/audio</code> as <code>afrobeats.mp3</code>, <code>amapiano.mp3</code>, <code>hiphop.mp3</code>, <code>latin.mp3</code>.</p>
       <div class="platforms" aria-label="Music platforms">
         <a class="btn btn-spotify" href="https://open.spotify.com/search/deejay%20samba" target="_blank" rel="noopener noreferrer">
           <span style="display:inline-flex; align-items:center; gap:8px">
@@ -279,7 +279,9 @@
           <div class="track">
             <span class="track-label">Afrobeats Mini Loop</span>
             <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="afrobeats"></audio>
+            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="afrobeats">
+              <source src="assets/audio/afrobeats.mp3" type="audio/mpeg" />
+            </audio>
           </div>
         </div>
         <!-- Amapiano -->
@@ -288,7 +290,9 @@
           <div class="track">
             <span class="track-label">Amapiano Mini Loop</span>
             <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="amapiano"></audio>
+            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="amapiano">
+              <source src="assets/audio/amapiano.mp3" type="audio/mpeg" />
+            </audio>
           </div>
         </div>
         <!-- Hip-Hop -->
@@ -297,7 +301,9 @@
           <div class="track">
             <span class="track-label">Hip-Hop Mini Loop</span>
             <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="hiphop"></audio>
+            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="hiphop">
+              <source src="assets/audio/hiphop.mp3" type="audio/mpeg" />
+            </audio>
           </div>
         </div>
         <!-- Latin -->
@@ -306,7 +312,9 @@
           <div class="track">
             <span class="track-label">Latin Mini Loop</span>
             <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="latin"></audio>
+            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="latin">
+              <source src="assets/audio/latin.mp3" type="audio/mpeg" />
+            </audio>
           </div>
         </div>
       </div>
