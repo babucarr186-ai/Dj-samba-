@@ -238,7 +238,7 @@
   <section id="beats">
     <div class="container">
   <h2 class="section-title">Beats</h2>
-  <p class="section-sub">Short previews by style — powered by your MP3s if present, otherwise mini loops. Add MP3s under <code>assets/audio</code> as <code>afrobeats.mp3</code>, <code>amapiano.mp3</code>, <code>hiphop.mp3</code>, <code>latin.mp3</code>.</p>
+  <p class="section-sub">Styles listed below. Audio previews are currently disabled.</p>
       <div class="platforms" aria-label="Music platforms">
         <a class="btn btn-spotify" href="https://open.spotify.com/search/deejay%20samba" target="_blank" rel="noopener noreferrer">
           <span style="display:inline-flex; align-items:center; gap:8px">
@@ -277,48 +277,28 @@
         <div class="card">
           <h3>Afrobeats</h3>
           <div class="track">
-            <span class="track-label">Afrobeats Mini Loop</span>
-            <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="afrobeats">
-              <source src="assets/audio/afrobeats.ogg" type="audio/ogg" />
-              <source src="assets/audio/afrobeats.mp3" type="audio/mpeg" />
-            </audio>
+            <span class="track-label">Afrobeats</span>
           </div>
         </div>
         <!-- Amapiano -->
         <div class="card">
           <h3>Amapiano</h3>
           <div class="track">
-            <span class="track-label">Amapiano Mini Loop</span>
-            <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="amapiano">
-              <source src="assets/audio/amapiano.ogg" type="audio/ogg" />
-              <source src="assets/audio/amapiano.mp3" type="audio/mpeg" />
-            </audio>
+            <span class="track-label">Amapiano</span>
           </div>
         </div>
         <!-- Hip-Hop -->
         <div class="card">
           <h3>Hip-Hop</h3>
           <div class="track">
-            <span class="track-label">Hip-Hop Mini Loop</span>
-            <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="hiphop">
-              <source src="assets/audio/hiphop.ogg" type="audio/ogg" />
-              <source src="assets/audio/hiphop.mp3" type="audio/mpeg" />
-            </audio>
+            <span class="track-label">Hip-Hop</span>
           </div>
         </div>
         <!-- Latin -->
         <div class="card">
           <h3>Latin</h3>
           <div class="track">
-            <span class="track-label">Latin Mini Loop</span>
-            <div class="eq" aria-hidden="true"><span></span><span></span><span></span></div>
-            <audio controls preload="metadata" data-fallback="beat" data-fallback-genre="latin">
-              <source src="assets/audio/latin.ogg" type="audio/ogg" />
-              <source src="assets/audio/latin.mp3" type="audio/mpeg" />
-            </audio>
+            <span class="track-label">Latin</span>
           </div>
         </div>
       </div>
@@ -383,13 +363,6 @@
         </div>
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">Send Booking Request</button>
-          <a class="btn btn-ghost call" href="tel:+4917662350091" title="Call now">
-            <span>Call Now</span>
-            <strong>+49 176 62350091</strong>
-          </a>
-          <a class="btn btn-whatsapp" href="https://wa.me/4917662350091?text=Hi%20Deejay%20Samba%2C%20I%27d%20like%20to%20book%20you%20for%20an%20event" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-            WhatsApp
-          </a>
         </div>
         <small style="color:var(--muted)">We’ll reply by email shortly after you submit.</small>
       </form>
@@ -483,171 +456,7 @@
   <a id="toTop" class="btn btn-ghost" href="#home" aria-label="Back to top">↑</a>
 
   <script>
-    // Fallback: generate a short WAV preview if MP3 files are not present
-    // So audio players always work during development.
-    (function(){
-      const genreBase = {
-        afrobeats: 148,
-        amapiano: 112,
-        hiphop: 90,
-        latin: 120,
-        mix: 124
-      };
-
-      function createBeatWav({seconds=6, sampleRate=44100, bpm=120, baseHz=100}){
-        const length = seconds * sampleRate;
-        const channels = 1;
-        const data = new Int16Array(length * channels);
-
-        // Simple pattern: kick on 1 & 3, hat on 8ths, tone stab on 2 & 4
-        const spb = sampleRate * 60 / bpm; // samples per beat
-
-        for(let i=0;i<length;i++){
-          const t = i / sampleRate;
-          const beatPos = (i % spb) / spb; // 0..1 within beat
-
-          // kick: short exponential decay click
-          let kick = 0;
-          if (beatPos < 0.04 || (beatPos > 0.5 && beatPos < 0.54)) {
-            const k = (beatPos % 0.5) * 25; // 0..1 quickly
-            kick = Math.sin(2*Math.PI*(baseHz*0.9 + 40*(1-k)) * t) * Math.exp(-k*8);
-          }
-
-          // hat: 8th notes, noise burst
-          let hat = 0;
-          const eighth = (i % (spb/2)) / (spb/2);
-          if (eighth < 0.02){
-            const n = (Math.random()*2-1) * Math.exp(-eighth*50);
-            hat = n * 0.25;
-          }
-
-          // stab: musical tone on beats 2 & 4
-          let stab = 0;
-          if ((beatPos > 0.25 && beatPos < 0.30) || (beatPos > 0.75 && beatPos < 0.80)){
-            const env = Math.exp(-(beatPos%0.5)*15);
-            const f = baseHz*2;
-            stab = (Math.sin(2*Math.PI*f*t) + Math.sin(2*Math.PI*f*1.5*t)*0.5) * 0.18 * env;
-          }
-
-          let v = kick + hat + stab;
-          // soft clip
-          if (v>1) v = 1; if (v<-1) v = -1;
-          data[i] = v * 32767;
-        }
-
-        // Build WAV header
-        const bytesPerSample = 2;
-        const blockAlign = channels * bytesPerSample;
-        const byteRate = sampleRate * blockAlign;
-        const dataSize = data.length * bytesPerSample;
-        const buffer = new ArrayBuffer(44 + dataSize);
-        const view = new DataView(buffer);
-        let p = 0;
-        function writeStr(s){ for(let i=0;i<s.length;i++) view.setUint8(p++, s.charCodeAt(i)); }
-        function write16(v){ view.setUint16(p, v, true); p+=2; }
-        function write32(v){ view.setUint32(p, v, true); p+=4; }
-
-        writeStr('RIFF');
-        write32(36 + dataSize);
-        writeStr('WAVE');
-        writeStr('fmt ');
-        write32(16); // PCM
-        write16(1);  // format
-        write16(channels);
-        write32(sampleRate);
-        write32(byteRate);
-        write16(blockAlign);
-        write16(16); // bits
-        writeStr('data');
-        write32(dataSize);
-
-        // PCM data
-        const out = new Int16Array(buffer, 44);
-        out.set(data);
-
-        return new Blob([buffer], {type:'audio/wav'});
-      }
-
-      function ensureFallback(audio){
-        if (audio.dataset._hasFallback) return;
-        const genre = (audio.getAttribute('data-fallback-genre')||'mix').toLowerCase();
-        const bpm = genreBase[genre] || 120;
-        const baseHz = genre === 'amapiano' ? 60 : genre === 'hiphop' ? 55 : genre === 'latin' ? 110 : genre === 'afrobeats' ? 100 : 95;
-        const blob = createBeatWav({seconds:8, bpm, baseHz});
-        const url = URL.createObjectURL(blob);
-        audio.src = url; // acts as <source> fallback
-        audio.dataset._hasFallback = '1';
-      }
-
-      document.querySelectorAll('audio[data-fallback="beat"]').forEach(audio => {
-        // On play, synthesize a short WAV mini loop for preview
-        audio.addEventListener('error', () => ensureFallback(audio));
-        // Some browsers won't fire error until play attempt; also proactively set fallback after 200ms if no duration
-        let checked = false;
-        const t = setTimeout(() => {
-          if (!checked && (isNaN(audio.duration) || !isFinite(audio.duration))) {
-            // No external source is required; we generate a loop when playback starts
-          }
-        }, 200);
-        audio.addEventListener('play', () => {
-          checked = true;
-          // If it still doesn't have a readyState, give it a fallback
-          if (audio.readyState === 0) ensureFallback(audio);
-        });
-      });
-    })();
-
-    // Optional: brief ambient crowd sound on page load (auto-stops after ~4s)
-    (function(){
-      try{ if (localStorage.getItem('muteIntro') === '1') return; }catch(e){}
-      const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) return; // be respectful
-
-      let started = false;
-      function playCrowd(){
-        if (started) return; started = true;
-        const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-        const ctx = new AC();
-        if (ctx.state === 'suspended') {
-          const resume = () => { ctx.resume().then(startNoise).catch(()=>{}); window.removeEventListener('pointerdown', resume); };
-          window.addEventListener('pointerdown', resume, {once:true});
-          // Also try immediately
-          ctx.resume().then(startNoise).catch(()=>{});
-        } else {
-          startNoise();
-        }
-
-        function startNoise(){
-          const duration = 4.0;
-          const sampleRate = ctx.sampleRate;
-          const buffer = ctx.createBuffer(1, sampleRate * duration, sampleRate);
-          const data = buffer.getChannelData(0);
-          for (let i=0;i<data.length;i++){
-            // Brownian-ish noise for a crowd murmur
-            const n = (Math.random()*2-1) * 0.5;
-            data[i] = (data[i-1]||0)*0.98 + n*0.02;
-          }
-          const source = ctx.createBufferSource();
-          source.buffer = buffer;
-          const low = ctx.createBiquadFilter(); low.type='lowshelf'; low.frequency.value = 200; low.gain.value = 6;
-          const band = ctx.createBiquadFilter(); band.type='bandpass'; band.frequency.value = 1200; band.Q.value = 0.6;
-          const gain = ctx.createGain(); gain.gain.value = 0.0001;
-          source.connect(low).connect(band).connect(gain).connect(ctx.destination);
-          const now = ctx.currentTime;
-          gain.gain.setValueAtTime(0.0001, now);
-          gain.gain.exponentialRampToValueAtTime(0.12, now + 0.6);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-          source.start();
-          source.stop(now + duration + 0.1);
-        }
-      }
-
-      // Attempt soon after load; browsers may delay until interaction
-      if (document.readyState === 'complete') playCrowd();
-      else window.addEventListener('load', playCrowd, {once:true});
-    })();
-
-    // Active nav, reveal on scroll, toTop toggle, mute-intro toggle
+    // Active nav, reveal on scroll, toTop toggle
     (function(){
       // Active nav link
       const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
