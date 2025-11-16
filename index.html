@@ -713,6 +713,16 @@
       const langButtons = document.querySelectorAll('.lang-switch button[data-lang]');
       langButtons.forEach(btn => btn.addEventListener('click', ()=> setLanguage(btn.getAttribute('data-lang'))));
 
+      // Ensure FormSubmit redirects to the same domain (works on Pages and Vercel)
+      const bookingForm = document.querySelector('#bookings form');
+      if (bookingForm){
+        const nextField = bookingForm.querySelector('input[name="_next"]');
+        if (nextField){
+          const url = location.origin + location.pathname + '#thanks';
+          nextField.value = url;
+        }
+      }
+
       // Active nav link
       const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
       const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
