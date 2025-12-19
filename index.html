@@ -1023,9 +1023,13 @@
         const t = (k)=>{
           try{ return translations[currentLang].photos[k]; }catch(_){ return translations.en.photos[k]; }
         };
+
+        // Keep i18n working: prefer updating the inner span (so data-i18n remains intact)
+        const photosHintText = (photosHint && photosHint.querySelector && photosHint.querySelector('[data-i18n]')) ? photosHint.querySelector('[data-i18n]') : photosHint;
+
         if (!cfg || !cfg.storage){
           // No storage configured — keep uploads hidden
-          if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hint'); }
+          if (photosHintText){ photosHint.style.display = ''; photosHintText.textContent = t('hint'); }
           // Initialize events planner too
           initEventsPlanner(cfg);
           return;
@@ -1102,7 +1106,9 @@
         const keyOk = keyStr.startsWith('eyJ') && keyStr.length > 100;
         if (!(urlOk && keyOk)){
           // Config file exists but invalid — keep uploads hidden and show guidance
-          if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hintInvalid'); }
+          if (photosHintText){ photosHint.style.display = ''; photosHintText.textContent = t('hintInvalid'); }
+          // Events should still work even if uploads config is invalid
+          initEventsPlanner(cfg);
           return;
         }
 
