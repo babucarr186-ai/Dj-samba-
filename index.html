@@ -690,6 +690,7 @@
         sub: "Post your next event and let the audience know.",
         submit: "Submit an Event",
         hint: "No upcoming events yet. Add events via config or form.",
+        error: "Unable to load events right now. Please refresh and try again.",
         when: "When",
         where: "Where",
         addToCalendar: "Add to calendar",
@@ -700,6 +701,7 @@
         sub: "Posten Sie Ihr nächstes Event und informieren Sie Ihr Publikum.",
         submit: "Event einreichen",
         hint: "Noch keine bevorstehenden Events. Fügen Sie Events über die Konfiguration oder das Formular hinzu.",
+        error: "Events können gerade nicht geladen werden. Bitte aktualisieren und erneut versuchen.",
         when: "Wann",
         where: "Wo",
         addToCalendar: "Zum Kalender hinzufügen",
@@ -982,7 +984,26 @@
         }
 
         // JSON provider: assets/events.json
-        const data = await loadEventsJson();
+        let data = null;
+        try{
+          data = await loadEventsJson();
+        }catch(_){ data = null; }
+
+        // If fetch/parse failed, show a localized error
+        if (!data){
+          eventsMode = 'none';
+          eventsCache = null;
+          if (eventsHint){
+            eventsHint.style.display = '';
+            eventsHint.setAttribute('data-i18n', 'planner.error');
+            // applyTranslations will set the correct language text
+          }
+          return;
+        }
+
+        // Ensure the hint key is reset when data is present
+        if (eventsHint) eventsHint.setAttribute('data-i18n', 'planner.hint');
+
         let list = (data && Array.isArray(data.events)) ? data.events : [];
 
         // Filter + sort (upcoming only)
@@ -1024,12 +1045,17 @@
           try{ return translations[currentLang].photos[k]; }catch(_){ return translations.en.photos[k]; }
         };
 
-        // Keep i18n working: prefer updating the inner span (so data-i18n remains intact)
-        const photosHintText = (photosHint && photosHint.querySelector && photosHint.querySelector('[data-i18n]')) ? photosHint.querySelector('[data-i18n]') : photosHint;
+        // Keep i18n working: update the inner span and keep the correct data-i18n key
+        const photosHintKeyEl = (photosHint && photosHint.querySelector) ? photosHint.querySelector('[data-i18n]') : null;
 
         if (!cfg || !cfg.storage){
           // No storage configured — keep uploads hidden
-          if (photosHintText){ photosHint.style.display = ''; photosHintText.textContent = t('hint'); }
+          if (photosHintKeyEl){
+            photosHintKeyEl.setAttribute('data-i18n', 'photos.hint');
+            photosHintKeyEl.textContent = t('hint');
+          } else if (photosHint){
+            photosHint.textContent = t('hint');
+          }
           // Initialize events planner too
           initEventsPlanner(cfg);
           return;
@@ -1106,7 +1132,12 @@
         const keyOk = keyStr.startsWith('eyJ') && keyStr.length > 100;
         if (!(urlOk && keyOk)){
           // Config file exists but invalid — keep uploads hidden and show guidance
-          if (photosHintText){ photosHint.style.display = ''; photosHintText.textContent = t('hintInvalid'); }
+          if (photosHintKeyEl){
+            photosHintKeyEl.setAttribute('data-i18n', 'photos.hintInvalid');
+            photosHintKeyEl.textContent = t('hintInvalid');
+          } else if (photosHint){
+            photosHint.textContent = t('hintInvalid');
+          }
           // Events should still work even if uploads config is invalid
           initEventsPlanner(cfg);
           return;
