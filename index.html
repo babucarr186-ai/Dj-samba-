@@ -3,549 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">DJ Samba - Professional DJ Services in Gambia</title>
-    <meta name="description" content="Professional DJ services in Gambia. Book DJ Samba for weddings, parties, and corporate events. Expert mixing, premium sound equipment, and unforgettable entertainment.">
-    <meta name="keywords" content="DJ Gambia, DJ Samba, Gambian DJ, wedding DJ Gambia, party DJ, event DJ, professional DJ services, music entertainment Gambia">
-    <meta name="author" content="DJ Samba">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://djsamba.gm/">
-    <meta property="og:title" content="DJ Samba - Professional DJ Services in Gambia">
-    <meta property="og:description" content="Book the best DJ in Gambia for your next event. Professional mixing, premium equipment, and unforgettable entertainment.">
-    <meta property="og:image" content="https://djsamba.gm/images/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://djsamba.gm/">
-    <meta property="twitter:title" content="DJ Samba - Professional DJ Services in Gambia">
-    <meta property="twitter:description" content="Book the best DJ in Gambia for your next event. Professional mixing, premium equipment, and unforgettable entertainment.">
-    <meta property="twitter:image" content="https://djsamba.gm/images/og-image.jpg">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "DJ Samba",
-        "description": "Professional DJ services in Gambia",
-        "url": "https://djsamba.gm",
-        "telephone": "+220-XXX-XXXX",
-        "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "GM",
-            "addressLocality": "Gambia"
-        },
-        "priceRange": "$$",
-        "image": "https://djsamba.gm/images/og-image.jpg"
-    }
-    </script>
+    <title>DJ Samba - Professional DJ Services</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <div class="logo">
-                    <a href="#home">
-                        <i class="fas fa-music"></i>
-                        <span data-i18n="nav.brand">DJ SAMBA</span>
-                    </a>
-                </div>
-                
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link" data-i18n="nav.home">Home</a></li>
-                    <li><a href="#about" class="nav-link" data-i18n="nav.about">About</a></li>
-                    <li><a href="#services" class="nav-link" data-i18n="nav.services">Services</a></li>
-                    <li><a href="#gallery" class="nav-link" data-i18n="nav.gallery">Gallery</a></li>
-                    <li><a href="#testimonials" class="nav-link" data-i18n="nav.testimonials">Testimonials</a></li>
-                    <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
-                    <li class="language-switcher">
-                        <button class="lang-btn" id="langBtn">
-                            <i class="fas fa-globe"></i>
-                            <span id="currentLang">EN</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="lang-dropdown" id="langDropdown">
-                            <li><a href="#" data-lang="en">English</a></li>
-                            <li><a href="#" data-lang="wo">Wolof</a></li>
-                            <li><a href="#" data-lang="ff">Fula</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+    <header>
+        <nav>
+            <div class="logo">DJ Samba</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 data-aos="fade-up" data-i18n="hero.title">ELEVATE YOUR EVENT</h1>
-            <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero.subtitle">Professional DJ Services in The Gambia</p>
-            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
-                <a href="#contact" class="btn btn-primary" data-i18n="hero.bookNow">Book Now</a>
-                <a href="#services" class="btn btn-secondary" data-i18n="hero.viewServices">View Services</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
+            <h1>DJ Samba</h1>
+            <p>Professional DJ Services for Your Special Events</p>
+            <a href="#contact" class="cta-button">Book Now</a>
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 data-i18n="about.title">About DJ Samba</h2>
-                <div class="underline"></div>
-            </div>
-            
+            <h2>About DJ Samba</h2>
             <div class="about-content">
-                <div class="about-image" data-aos="fade-right">
-                    <img src="images/dj-profile.jpg" alt="DJ Samba at work" loading="lazy">
-                    <div class="experience-badge">
-                        <span class="years">10+</span>
-                        <span data-i18n="about.yearsExp">Years Experience</span>
-                    </div>
+                <div class="about-text">
+                    <p>With over 10 years of experience in the music industry, DJ Samba brings energy and professionalism to every event. Specializing in weddings, corporate events, and private parties, I create unforgettable experiences through music.</p>
+                    <p>My diverse music library spans multiple genres, ensuring the perfect soundtrack for your celebration. From classic hits to the latest chart-toppers, I read the crowd and keep the dance floor packed all night long.</p>
                 </div>
-                
-                <div class="about-text" data-aos="fade-left">
-                    <h3 data-i18n="about.greeting">Welcome to the Sound of Celebration</h3>
-                    <p data-i18n="about.intro">With over a decade of experience in the Gambian entertainment industry, DJ Samba has become synonymous with unforgettable events and electrifying atmospheres.</p>
-                    
-                    <div class="about-features">
-                        <div class="feature-item">
-                            <i class="fas fa-award"></i>
-                            <div>
-                                <h4 data-i18n="about.feature1Title">Award-Winning DJ</h4>
-                                <p data-i18n="about.feature1Desc">Recognized for excellence in entertainment</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-headphones"></i>
-                            <div>
-                                <h4 data-i18n="about.feature2Title">Professional Equipment</h4>
-                                <p data-i18n="about.feature2Desc">State-of-the-art sound and lighting systems</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-music"></i>
-                            <div>
-                                <h4 data-i18n="about.feature3Title">Diverse Music Library</h4>
-                                <p data-i18n="about.feature3Desc">From Afrobeat to International hits</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <a href="#contact" class="btn btn-primary" data-i18n="about.hireMeBtn">Hire Me for Your Event</a>
+                <div class="about-image">
+                    <img src="images/dj-profile.jpg" alt="DJ Samba">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="services">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 data-i18n="services.title">My Services</h2>
-                <div class="underline"></div>
-                <p data-i18n="services.subtitle">Professional DJ services tailored to your event needs</p>
-            </div>
-            
+            <h2>Services</h2>
             <div class="services-grid">
-                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-icon">
-                        <i class="fas fa-ring"></i>
-                    </div>
-                    <h3 data-i18n="services.wedding.title">Wedding Ceremonies</h3>
-                    <p data-i18n="services.wedding.desc">Make your special day unforgettable with romantic music selections and seamless transitions for every moment.</p>
-                    <ul class="service-features">
-                        <li data-i18n="services.wedding.feat1"><i class="fas fa-check"></i> Custom playlists</li>
-                        <li data-i18n="services.wedding.feat2"><i class="fas fa-check"></i> Ceremony & reception music</li>
-                        <li data-i18n="services.wedding.feat3"><i class="fas fa-check"></i> Professional MC services</li>
-                    </ul>
+                <div class="service-card">
+                    <div class="service-icon">🎵</div>
+                    <h3>Wedding DJ</h3>
+                    <p>Make your special day unforgettable with personalized music selections and professional MC services.</p>
                 </div>
-                
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-icon">
-                        <i class="fas fa-birthday-cake"></i>
-                    </div>
-                    <h3 data-i18n="services.birthday.title">Birthday Parties</h3>
-                    <p data-i18n="services.birthday.desc">From kids' parties to milestone celebrations, create the perfect atmosphere for your birthday bash.</p>
-                    <ul class="service-features">
-                        <li data-i18n="services.birthday.feat1"><i class="fas fa-check"></i> Age-appropriate music</li>
-                        <li data-i18n="services.birthday.feat2"><i class="fas fa-check"></i> Interactive entertainment</li>
-                        <li data-i18n="services.birthday.feat3"><i class="fas fa-check"></i> Special effects & lighting</li>
-                    </ul>
+                <div class="service-card">
+                    <div class="service-icon">🎉</div>
+                    <h3>Private Parties</h3>
+                    <p>From birthdays to anniversaries, bring life to your celebration with the perfect party atmosphere.</p>
                 </div>
-                
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <h3 data-i18n="services.corporate.title">Corporate Events</h3>
-                    <p data-i18n="services.corporate.desc">Professional entertainment for corporate gatherings, conferences, and company celebrations.</p>
-                    <ul class="service-features">
-                        <li data-i18n="services.corporate.feat1"><i class="fas fa-check"></i> Sophisticated music selection</li>
-                        <li data-i18n="services.corporate.feat2"><i class="fas fa-check"></i> Audio-visual support</li>
-                        <li data-i18n="services.corporate.feat3"><i class="fas fa-check"></i> Professional presentation</li>
-                    </ul>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Corporate Events</h3>
+                    <p>Professional entertainment for conferences, galas, and company celebrations.</p>
                 </div>
-                
-                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-icon">
-                        <i class="fas fa-glass-cheers"></i>
-                    </div>
-                    <h3 data-i18n="services.private.title">Private Parties</h3>
-                    <p data-i18n="services.private.desc">Exclusive entertainment for intimate gatherings and private celebrations of all kinds.</p>
-                    <ul class="service-features">
-                        <li data-i18n="services.private.feat1"><i class="fas fa-check"></i> Personalized experience</li>
-                        <li data-i18n="services.private.feat2"><i class="fas fa-check"></i> Flexible setup options</li>
-                        <li data-i18n="services.private.feat3"><i class="fas fa-check"></i> Request-friendly approach</li>
-                    </ul>
-                </div>
-                
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 data-i18n="services.cultural.title">Cultural Events</h3>
-                    <p data-i18n="services.cultural.desc">Celebrate Gambian culture and traditions with authentic music and respectful entertainment.</p>
-                    <ul class="service-features">
-                        <li data-i18n="services.cultural.feat1"><i class="fas fa-check"></i> Traditional music</li>
-                        <li data-i18n="services.cultural.feat2"><i class="fas fa-check"></i> Cultural sensitivity</li>
-                        <li data-i18n="services.cultural.feat3"><i class="fas fa-check"></i> Local & international mix</li>
-                    </ul>
-                </div>
-                
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-icon">
-                        <i class="fas fa-hotel"></i>
-                    </div>
-                    <h3 data-i18n="services.venue.title">Venue Entertainment</h3>
-                    <p data-i18n="services.venue.desc">Regular entertainment services for hotels, restaurants, and entertainment venues.</p>
-                    <ul class="service-features">
-                        <li data-i18n="services.venue.feat1"><i class="fas fa-check"></i> Recurring bookings</li>
-                        <li data-i18n="services.venue.feat2"><i class="fas fa-check"></i> Atmosphere curation</li>
-                        <li data-i18n="services.venue.feat3"><i class="fas fa-check"></i> Flexible scheduling</li>
-                    </ul>
+                <div class="service-card">
+                    <div class="service-icon">🎊</div>
+                    <h3>Club Nights</h3>
+                    <p>High-energy sets that keep the dance floor moving all night long.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section id="gallery" class="gallery">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 data-i18n="gallery.title">Gallery</h2>
-                <div class="underline"></div>
-                <p data-i18n="gallery.subtitle">Moments captured from unforgettable events</p>
-            </div>
-            
-            <div class="gallery-filters" data-aos="fade-up">
-                <button class="filter-btn active" data-filter="all" data-i18n="gallery.all">All</button>
-                <button class="filter-btn" data-filter="weddings" data-i18n="gallery.weddings">Weddings</button>
-                <button class="filter-btn" data-filter="parties" data-i18n="gallery.parties">Parties</button>
-                <button class="filter-btn" data-filter="corporate" data-i18n="gallery.corporate">Corporate</button>
-                <button class="filter-btn" data-filter="equipment" data-i18n="gallery.equipment">Equipment</button>
-            </div>
-            
+            <h2>Gallery</h2>
             <div class="gallery-grid">
-                <div class="gallery-item" data-category="weddings" data-aos="zoom-in">
-                    <img src="images/gallery/wedding1.jpg" alt="Wedding event" loading="lazy">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-item">
+                    <img src="images/event1.jpg" alt="Event 1">
                 </div>
-                <div class="gallery-item" data-category="parties" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="images/gallery/party1.jpg" alt="Party event" loading="lazy">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-item">
+                    <img src="images/event2.jpg" alt="Event 2">
                 </div>
-                <div class="gallery-item" data-category="corporate" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="images/gallery/corporate1.jpg" alt="Corporate event" loading="lazy">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-item">
+                    <img src="images/event3.jpg" alt="Event 3">
                 </div>
-                <div class="gallery-item" data-category="equipment" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="images/gallery/equipment1.jpg" alt="DJ equipment" loading="lazy">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-item">
+                    <img src="images/event4.jpg" alt="Event 4">
                 </div>
-                <div class="gallery-item" data-category="weddings" data-aos="zoom-in">
-                    <img src="images/gallery/wedding2.jpg" alt="Wedding celebration" loading="lazy">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-item">
+                    <img src="images/event5.jpg" alt="Event 5">
                 </div>
-                <div class="gallery-item" data-category="parties" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="images/gallery/party2.jpg" alt="Birthday party" loading="lazy">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-item">
+                    <img src="images/event6.jpg" alt="Event 6">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 data-i18n="testimonials.title">What Clients Say</h2>
-                <div class="underline"></div>
-                <p data-i18n="testimonials.subtitle">Don't just take my word for it</p>
-            </div>
-            
-            <div class="testimonials-slider">
-                <div class="testimonial-card" data-aos="fade-up">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p data-i18n="testimonials.test1.text">"DJ Samba made our wedding absolutely perfect! The music selection was spot-on, and he kept everyone dancing all night long. Highly recommended!"</p>
-                    <div class="testimonial-author">
-                        <img src="images/testimonials/client1.jpg" alt="Fatou Jallow" loading="lazy">
-                        <div>
-                            <h4 data-i18n="testimonials.test1.name">Fatou & Lamin Jallow</h4>
-                            <span data-i18n="testimonials.test1.event">Wedding - December 2023</span>
-                        </div>
-                    </div>
+            <h2>What Clients Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"DJ Samba made our wedding absolutely perfect! The music selection was spot-on and kept everyone dancing all night."</p>
+                    <h4>- Sarah & John</h4>
                 </div>
-                
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p data-i18n="testimonials.test2.text">"Professional, punctual, and phenomenal! DJ Samba understood exactly what we wanted for our corporate event. The audio quality was exceptional."</p>
-                    <div class="testimonial-author">
-                        <img src="images/testimonials/client2.jpg" alt="Momodou Ceesay" loading="lazy">
-                        <div>
-                            <h4 data-i18n="testimonials.test2.name">Momodou Ceesay</h4>
-                            <span data-i18n="testimonials.test2.event">Corporate Event - January 2024</span>
-                        </div>
-                    </div>
+                <div class="testimonial-card">
+                    <p>"Professional, punctual, and talented. Our corporate event was a huge success thanks to DJ Samba."</p>
+                    <h4>- Tech Corp Inc.</h4>
                 </div>
-                
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p data-i18n="testimonials.test3.text">"Best DJ in The Gambia! My daughter's birthday party was a huge success thanks to DJ Samba. He engaged the kids and adults alike. Will book again!"</p>
-                    <div class="testimonial-author">
-                        <img src="images/testimonials/client3.jpg" alt="Awa Touray" loading="lazy">
-                        <div>
-                            <h4 data-i18n="testimonials.test3.name">Awa Touray</h4>
-                            <span data-i18n="testimonials.test3.event">Birthday Party - November 2023</span>
-                        </div>
-                    </div>
+                <div class="testimonial-card">
+                    <p>"Best party we've ever had! DJ Samba knows how to read the crowd and keep the energy high."</p>
+                    <h4>- Mike R.</h4>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 data-i18n="contact.title">Get In Touch</h2>
-                <div class="underline"></div>
-                <p data-i18n="contact.subtitle">Ready to make your event unforgettable? Let's talk!</p>
-            </div>
-            
+            <h2>Book DJ Samba</h2>
             <div class="contact-content">
-                <div class="contact-info" data-aos="fade-right">
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4 data-i18n="contact.phone">Phone</h4>
-                            <p>+220 XXX XXXX</p>
-                        </div>
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Ready to make your event unforgettable? Contact me today to check availability and discuss your music needs.</p>
+                    <div class="contact-details">
+                        <p><strong>Email:</strong> djsamba@example.com</p>
+                        <p><strong>Phone:</strong> (555) 123-4567</p>
+                        <p><strong>Location:</strong> New York, NY</p>
                     </div>
-                    
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4 data-i18n="contact.email">Email</h4>
-                            <p>booking@djsamba.gm</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4 data-i18n="contact.location">Location</h4>
-                            <p>Serrekunda, The Gambia</p>
-                        </div>
-                    </div>
-                    
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-icon">Facebook</a>
+                        <a href="#" class="social-icon">Instagram</a>
+                        <a href="#" class="social-icon">Twitter</a>
                     </div>
                 </div>
-                
-                <form class="contact-form" data-aos="fade-left">
-                    <div class="form-group">
-                        <input type="text" name="name" required data-i18n-placeholder="contact.form.name">
-                        <label data-i18n="contact.form.name">Your Name</label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="email" name="email" required data-i18n-placeholder="contact.form.email">
-                        <label data-i18n="contact.form.email">Your Email</label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="tel" name="phone" data-i18n-placeholder="contact.form.phone">
-                        <label data-i18n="contact.form.phone">Phone Number</label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <select name="event-type" required>
-                            <option value="" disabled selected data-i18n="contact.form.eventType">Select Event Type</option>
-                            <option value="wedding" data-i18n="contact.form.wedding">Wedding</option>
-                            <option value="birthday" data-i18n="contact.form.birthday">Birthday Party</option>
-                            <option value="corporate" data-i18n="contact.form.corporate">Corporate Event</option>
-                            <option value="private" data-i18n="contact.form.private">Private Party</option>
-                            <option value="cultural" data-i18n="contact.form.cultural">Cultural Event</option>
-                            <option value="other" data-i18n="contact.form.other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="date" name="event-date" required>
-                        <label data-i18n="contact.form.eventDate">Event Date</label>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <textarea name="message" rows="5" required data-i18n-placeholder="contact.form.message"></textarea>
-                        <label data-i18n="contact.form.message">Your Message</label>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" data-i18n="contact.form.submit">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>DJ SAMBA</h3>
-                    <p data-i18n="footer.tagline">Bringing the beat to every celebration in The Gambia</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 data-i18n="footer.quickLinks">Quick Links</h4>
-                    <ul>
-                        <li><a href="#home" data-i18n="nav.home">Home</a></li>
-                        <li><a href="#about" data-i18n="nav.about">About</a></li>
-                        <li><a href="#services" data-i18n="nav.services">Services</a></li>
-                        <li><a href="#gallery" data-i18n="nav.gallery">Gallery</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 data-i18n="footer.services">Services</h4>
-                    <ul>
-                        <li><a href="#services" data-i18n="services.wedding.title">Wedding Ceremonies</a></li>
-                        <li><a href="#services" data-i18n="services.birthday.title">Birthday Parties</a></li>
-                        <li><a href="#services" data-i18n="services.corporate.title">Corporate Events</a></li>
-                        <li><a href="#services" data-i18n="services.private.title">Private Parties</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 data-i18n="footer.newsletter">Newsletter</h4>
-                    <p data-i18n="footer.newsletterText">Subscribe for updates and special offers</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email" data-i18n-placeholder="footer.emailPlaceholder" required>
-                        <button type="submit" data-i18n="footer.subscribe">Subscribe</button>
+                <div class="contact-form">
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventType">Event Type</label>
+                            <select id="eventType" name="eventType" required>
+                                <option value="">Select Event Type</option>
+                                <option value="wedding">Wedding</option>
+                                <option value="birthday">Birthday Party</option>
+                                <option value="corporate">Corporate Event</option>
+                                <option value="club">Club Night</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Event Date</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Send Inquiry</button>
                     </form>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 DJ Samba. <span data-i18n="footer.copyright">All rights reserved.</span></p>
-                <div class="footer-links">
-                    <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
-                    <a href="#" data-i18n="footer.terms">Terms of Service</a>
-                </div>
-            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 DJ Samba. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- Gallery Modal -->
-    <div class="gallery-modal" id="galleryModal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImage" alt="Gallery image">
-        <div class="modal-nav">
-            <button class="modal-prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
-            <button class="modal-next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="js/translations.js"></script>
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
