@@ -45,8 +45,8 @@ Use `assets/events.sample.json` as a template and create `assets/events.json`:
 
 Fields:
 - `title` — event name
-- `date` — ISO start datetime (UTC recommended)
-- `endDate` — optional ISO end datetime
+- `date` — ISO start datetime (recommended: include a timezone offset, e.g. `2025-12-31T22:00:00+01:00`)
+- `endDate` — optional ISO end datetime (same timezone format)
 - `venue`, `city`, `country` — location details
 - `link` — ticket or info URL
 - `image` — optional image path
@@ -54,6 +54,8 @@ Fields:
 ## Calendar links
 
 Each event card includes an "Add to calendar" button (Google Calendar link). If you provide `endDate`, the time range is set accordingly.
+
+Timezone note: if you include an offset in your ISO date (e.g. `+01:00`), the event displays correctly for your intended local time and the calendar link uses the correct moment in time.
 
 ## Notes
 - If `config.json` includes `events.provider = airtable`, the site switches to embed mode and uses your form.
