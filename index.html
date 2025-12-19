@@ -372,6 +372,22 @@
           <p data-i18n="events.corpDesc">Brand parties, corporate nights, and premium private events tailored to your audience.</p>
         </div>
       </div>
+
+      <!-- Upcoming Events Planner -->
+      <div class="card" style="margin-top:18px; padding:18px">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0" data-i18n="planner.title">Upcoming Events</h3>
+            <p class="section-sub" style="margin:4px 0 0" data-i18n="planner.sub">Post your next event and let the audience know.</p>
+          </div>
+          <div class="upload" style="display:inline-flex; gap:8px; align-items:center">
+            <button id="submitEventBtn" class="btn btn-primary" style="display:none" data-i18n="planner.submit">Submit an Event</button>
+          </div>
+        </div>
+        <div id="eventsHint" style="margin-top:8px; color:var(--muted)" data-i18n="planner.hint">No upcoming events yet. Add events via config or form.</div>
+      </div>
+
+      <div id="upcomingEvents" class="grid" style="margin-top:14px"></div>
     </div>
   </section>
 
@@ -661,6 +677,20 @@
         hintInvalid: "Uploads sind deaktiviert: Die Speicher-Konfiguration ist ungültig. Bitte eine gültige Supabase-Projekt-URL und Anon-Key in assets/config.json eintragen."
       };
 
+      // i18n: events planner
+      translations.en.planner = {
+        title: "Upcoming Events",
+        sub: "Post your next event and let the audience know.",
+        submit: "Submit an Event",
+        hint: "No upcoming events yet. Add events via config or form."
+      };
+      translations.de.planner = {
+        title: "Bevorstehende Events",
+        sub: "Posten Sie Ihr nächstes Event und informieren Sie Ihr Publikum.",
+        submit: "Event einreichen",
+        hint: "Noch keine bevorstehenden Events. Fügen Sie Events über die Konfiguration oder das Formular hinzu."
+      };
+
       function applyTranslations(lang){
         const dict = translations[lang] || translations.en;
         // update document title
@@ -770,10 +800,22 @@
       const mediaInput = document.getElementById('mediaInput');
       const photosHint = document.getElementById('photosHint');
 
+      // Events planner: list + optional form
+      const upcomingGrid = document.getElementById('upcomingEvents');
+      const submitEventBtn = document.getElementById('submitEventBtn');
+      const eventsHint = document.getElementById('eventsHint');
+
       // Storage config loader
       async function loadConfig(){
         try{
           const res = await fetch('assets/config.json', { cache: 'no-store' });
+          if (!res.ok) return null; return await res.json();
+        }catch{ return null; }
+      }
+
+      async function loadEventsJson(){
+        try{
+          const res = await fetch('assets/events.json', { cache: 'no-store' });
           if (!res.ok) return null; return await res.json();
         }catch{ return null; }
       }
@@ -802,6 +844,87 @@
         return name.toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/-+/g,'-').replace(/^[-.]+|[-.]+$/g,'');
       }
 
+      function fmtDateRange(startIso, endIso){
+        try{
+          const s = new Date(startIso);
+          const e = endIso ? new Date(endIso) : null;
+          const opts = { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' };
+          const sTxt = s.toLocaleString(undefined, opts);
+          const eTxt = e ? e.toLocaleString(undefined, { hour:'2-digit', minute:'2-digit' }) : '';
+          return e ? `${sTxt} — ${eTxt}` : sTxt;
+        }catch{ return String(startIso||''); }
+      }
+
+      function gcalLink(ev){
+        const enc = encodeURIComponent;
+        const title = enc(ev.title || 'Event');
+        const loc = enc(ev.venue || ev.location || '');
+        const details = enc(ev.link ? `More: ${ev.link}` : '');
+        const start = new Date(ev.date);
+        const end = ev.endDate ? new Date(ev.endDate) : new Date(start.getTime() + 2*60*60*1000);
+        const fmt = (d)=>{
+          const pad = (n)=> String(n).padStart(2,'0');
+          return `${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`;
+        };
+        const dates = `${fmt(start)}/${fmt(end)}`;
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&location=${loc}&details=${details}`;
+      }
+
+      function renderEventCard(ev){
+        const div = document.createElement('div');
+        div.className = 'card';
+        const h3 = document.createElement('h3'); h3.textContent = ev.title || 'Untitled Event';
+        const p1 = document.createElement('p'); p1.textContent = fmtDateRange(ev.date, ev.endDate);
+        const p2 = document.createElement('p'); p2.textContent = [ev.venue, ev.city, ev.country].filter(Boolean).join(', ');
+        const actions = document.createElement('div'); actions.style.display='flex'; actions.style.gap='10px'; actions.style.flexWrap='wrap'; actions.style.marginTop='8px';
+        const calA = document.createElement('a'); calA.className='btn btn-ghost'; calA.href=gcalLink(ev); calA.target='_blank'; calA.rel='noopener noreferrer'; calA.textContent='Add to calendar';
+        actions.appendChild(calA);
+        if (ev.link){ const more = document.createElement('a'); more.className='btn btn-primary'; more.href=ev.link; more.target='_blank'; more.rel='noopener noreferrer'; more.textContent='Tickets / Details'; actions.appendChild(more); }
+        div.append(h3, p1, p2, actions);
+        return div;
+      }
+
+      async function initEventsPlanner(cfg){
+        // Airtable provider: embed view, open form
+        if (cfg && cfg.events && cfg.events.provider === 'airtable'){
+          const embed = cfg.events.embedUrl;
+          const form = cfg.events.formUrl;
+          if (embed && upcomingGrid){
+            const wrapper = document.createElement('div');
+            wrapper.className = 'embed-card';
+            const iframe = document.createElement('iframe');
+            iframe.loading = 'lazy'; iframe.referrerPolicy='no-referrer'; iframe.title='Upcoming Events';
+            iframe.style.height='600px'; iframe.src = embed;
+            wrapper.appendChild(iframe);
+            upcomingGrid.innerHTML = '';
+            upcomingGrid.appendChild(wrapper);
+            if (eventsHint) eventsHint.style.display='none';
+          }
+          if (form && submitEventBtn){
+            submitEventBtn.style.display='inline-block';
+            submitEventBtn.onclick = ()=> window.open(form, '_blank', 'noopener');
+          }
+          return;
+        }
+
+        // JSON provider: assets/events.json
+        const data = await loadEventsJson();
+        const list = (data && Array.isArray(data.events)) ? data.events : [];
+        if (list.length){
+          if (eventsHint) eventsHint.style.display='none';
+          upcomingGrid.innerHTML = '';
+          list.forEach(ev => upcomingGrid.appendChild(renderEventCard(ev)));
+        } else {
+          if (eventsHint) eventsHint.style.display='';
+        }
+
+        // Optional: submit button via config.events.formUrl if present
+        if (cfg && cfg.events && cfg.events.formUrl && submitEventBtn){
+          submitEventBtn.style.display='inline-block';
+          submitEventBtn.onclick = ()=> window.open(cfg.events.formUrl, '_blank', 'noopener');
+        }
+      }
+
       async function initStorage(){
         const cfg = await loadConfig();
         const currentLang = document.documentElement.getAttribute('lang') || 'en';
@@ -811,6 +934,8 @@
         if (!cfg || !cfg.storage){
           // No storage configured — keep uploads hidden
           if (photosHint){ photosHint.style.display = ''; photosHint.textContent = t('hint'); }
+          // Initialize events planner too
+          initEventsPlanner(cfg);
           return;
         }
 
@@ -869,6 +994,8 @@
 
           // We don't use the file input with Airtable
           if (mediaInput) mediaInput.remove();
+          // Initialize events planner too
+          initEventsPlanner(cfg);
           return;
         }
 
@@ -892,7 +1019,7 @@
 
         // Supabase client
         const supa = window.supabase && window.supabase.createClient ? window.supabase.createClient(cfg.storage.supabaseUrl, cfg.storage.supabaseAnonKey) : null;
-        if (!supa){ console.warn('Supabase SDK missing'); return; }
+        if (!supa){ console.warn('Supabase SDK missing'); initEventsPlanner(cfg); return; }
 
         const buckets = cfg.storage.buckets || { clubs:'clubs', weddings:'weddings', private:'private' };
 
@@ -908,6 +1035,8 @@
 
         // initial load
         await Promise.all(['clubs','weddings','private'].map(listCategory));
+        // Initialize events planner once storage is set
+        initEventsPlanner(cfg);
 
         // uploads
         uploadBtn?.addEventListener('click', ()=> mediaInput?.click());
@@ -935,6 +1064,6 @@
       initStorage();
     })();
   </script>
-  <!-- version: v2025-11-06-1 photos: add Airtable option -->
+  <!-- version: v2025-12-19-1 events planner + Airtable/JSON -->
 </body>
 </html>
